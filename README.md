@@ -21,6 +21,14 @@ In addition, this project will include:
 -- A tutorial
 
 
+Wireframe: https://wireframe.cc/JzH55B
+
+-- The about section will include liks to the Github repo, my LinkedIN and potentially my Devsite
+-- Menu will include an instructions, and settings toggle, with settings for fullscreen and sound
+    -potential bonus feature of a tutorial skip and difficulty level
+-- Start game will cause an animation that splays into the tutorial
+
+
 This project will be implemented with the following technologies:
 
  -- The Canvas API to render the game board
