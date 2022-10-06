@@ -1,15 +1,37 @@
 import Game from "./game.js"
 
 export default class GameView {
-    constructor(ctx){
-        this.game = new Game();
+    constructor(ctx, canvas){
         this.ctx = ctx;
-        this.gameSpeed = 20;
+        this.canvas = canvas
+        this.game = new Game();
     }
 
     start(){
-        setInterval(() => {
-            this.game.draw(this.ctx);
-        }, this.gameSpeed);
+        this.bindKeyHandlers();
+        // setInterval(() => {
+        //     this.game.draw(this.ctx, this.canvas);
+        // }, this.gameSpeed);
+    }
+
+    bindKeyHandlers (){
+        window.addEventListener("keydown", (e) => {
+            switch(e.code){
+                case "ArrowUp":
+                    this.game.slime.move("jump")
+                    break;
+                case "ArrowLeft": 
+                    this.game.slime.move("move left")
+                    break;
+                case "ArrowRight":
+                    this.game.slime.move("move right")
+                    break;
+                case "ArrowDown":
+                    this.game.slime.move("crouch")
+                    break;
+            }
+        })
+        window.addEventListener("keyup", (e)=>{
+        })
     }
 }

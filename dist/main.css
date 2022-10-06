@@ -17,7 +17,7 @@ canvas {
   padding: 0;
 }
 
-h1 {
+.start-menu {
   color: cornflowerblue;
   display: flex;
   position: fixed;
