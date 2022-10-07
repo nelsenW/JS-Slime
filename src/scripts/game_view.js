@@ -4,14 +4,14 @@ export default class GameView {
     constructor(ctx, canvas){
         this.ctx = ctx;
         this.canvas = canvas
-        this.game = new Game();
+        this.game = new Game(this.ctx, this.canvas);
     }
 
     start(){
         this.bindKeyHandlers();
-        // setInterval(() => {
-        //     this.game.draw(this.ctx, this.canvas);
-        // }, this.gameSpeed);
+        setInterval(() => {
+            this.game.draw(this.ctx, this.canvas);
+        }, this.game.gameSpeed);
     }
 
     bindKeyHandlers (){
@@ -30,8 +30,16 @@ export default class GameView {
                     this.game.slime.move("crouch")
                     break;
             }
-        })
+        });
         window.addEventListener("keyup", (e)=>{
-        })
+            switch(e.code){
+                case "ArrowRight":
+                    this.game.slime.move("stop")
+                    break;
+                case "ArrowLeft": 
+                    this.game.slime.move("stop")
+                    break;
+        }
+        });
     }
 }

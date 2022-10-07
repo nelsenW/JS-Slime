@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     const startGame = document.getElementById("startgame")
     const canvas = document.querySelector("#canvas");
     const ctx = canvas.getContext('2d');
+    const startMenu = document.querySelector(".start-menu")
     
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
@@ -12,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     let newGameView = new GameView(ctx, canvas);
     
     startGame.addEventListener("click", () => {
-      newGameView.start(); 
+        startMenu.style.display = "none"
+        newGameView.start(); 
     })
 })
