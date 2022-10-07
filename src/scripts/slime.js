@@ -39,7 +39,13 @@ export default class Slime{
         let position = Math.floor(frame/stagger) % ANIMATIONS[this.state]
         let x = 128 * position
         let y = Object.keys(ANIMATIONS).indexOf(this.state) * 128
-        this.ctx.drawImage(slimeSheet, x, y, 128, 128, this.pos[0], this.pos[1], 64, 64)
+        if (this.color !== "blue"){
+            this.ctx.drawImage(slimeSheet, x, y, 128, 128, this.pos[0], this.pos[1], 64, 64);
+            let focused = this.focus(this.color);
+            this.ctx.putImageData(focused, this.pos[0], this.pos[1]);
+        } else {
+            this.ctx.drawImage(slimeSheet, x, y, 128, 128, this.pos[0], this.pos[1], 64, 64);
+        }
         if (this.state === 'land' && position === 7){
             this.landing = true
         }
@@ -83,9 +89,14 @@ export default class Slime{
         console.log("crouch")
     }
 
-    focus(){
-        debugger
-        console.log(this.ctx.getImageData(this.pos[0],this.pos[1], 1, 1))
+    focus(color){
+        let slimeScan = this.ctx.getImageData(this.pos[0],this.pos[1], 64, 64)
+        for(let i = 0; i < slimeScan.data.length; i+= 4){
+            slimeScan.data[i] *= (ColorPad.COLORS[color].redMod / ColorPad.COLORS['blue'].redMod)
+            slimeScan.data[i+1] *= (ColorPad.COLORS[color].blueMod / ColorPad.COLORS['blue'].greenMod)
+            slimeScan.data[i+2] *= (ColorPad.COLORS[color].greenMod / ColorPad.COLORS['blue'].blueMod)
+        }
+        return slimeScan
     }
 
     isCollidedWithFloor(floorheight){
@@ -101,5 +112,10 @@ export default class Slime{
             }
             this.vel[1] = CONSTANTS.TERMINAL_VEL;
         }
+    }
+
+    floorColor(){
+        let floorColor = this.ctx.getImageData(this.pos[0],this.pos[1] + this.radius, 1, 1).data
+        return floorColor
     }
 }

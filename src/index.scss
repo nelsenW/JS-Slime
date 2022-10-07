@@ -45,12 +45,18 @@ button{
     margin: 5px 5px;
     background-color: cornflowerblue;
     font-family: 'Fredoka One';
+    border-radius: 10px;
 }
 
 #pause-menu{
     display: none;
     position: fixed;
     flex-direction: column;
+}
+
+image#blue-palette{
+    display: none;
+    position: absolute;
 }
     
 image#slime-sheet{

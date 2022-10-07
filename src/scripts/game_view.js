@@ -42,6 +42,8 @@ export default class GameView {
     bindKeyHandlers (){
         window.addEventListener("keydown", (e) => {
             switch(e.code){
+                case "Space":
+                    this.game.slime.color = "blue"
                 case "ArrowUp":
                     if(this.game.slime.landing === true){
                         this.game.frame = 0;
@@ -58,7 +60,23 @@ export default class GameView {
                     this.game.slime.move("crouch");
                     break;
                 case "KeyF":
-                    this.game.slime.focus();
+                      let floorColor = this.game.slime.floorColor()
+                      switch(floorColor[0]){
+                        case 235:
+                            this.game.slime.color = "red";
+                        case 238:
+                            this.game.slime.color = "orange";
+                        case 12:
+                            this.game.slime.color = "yellow";
+                        case 100:
+                            this.game.slime.color = "green";
+                        case 13:
+                            this.game.slime.color = "indigo";
+                        case 57:
+                            this.game.slime.color = "violet";
+                        case 255:
+                            this.game.slime.color = "pink";
+                      }
                     break;
                 case "KeyP":
                     this.pause();
