@@ -84,7 +84,8 @@ export default class Slime{
     }
 
     focus(){
-        console.log(this.ctx.getImageData(this.pos[0],this.pos[1] + this.radius + 5, 1, 1))
+        debugger
+        console.log(this.ctx.getImageData(this.pos[0],this.pos[1], 1, 1))
     }
 
     isCollidedWithFloor(floorheight){

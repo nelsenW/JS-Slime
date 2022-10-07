@@ -13,6 +13,7 @@ export const COLORS = {
     },
     "blue":{
         baseshade: 'rgb(100,149,237, 0.7)'
+        
     },
     "indigo":{
         baseshade: 'rgb(13,27,42, 0.7)'
