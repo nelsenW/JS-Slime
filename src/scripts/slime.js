@@ -28,7 +28,7 @@ export default class Slime{
 
     drawSlime(ctx){
         const slimeSheet = document.querySelector("#slime-sheet")
-        this.ctx.drawImage(slimeSheet, 0, 0, 32, 32, this.pos[0], this.pos[1], 32, 32)
+        this.ctx.drawImage(slimeSheet, 0, 0, 32, 32, this.pos[0], this.pos[1], 64, 64)
     }
 
     updatepos(){
