@@ -29,6 +29,9 @@ export default class GameView {
                 case "ArrowDown":
                     this.game.slime.move("crouch")
                     break;
+                case "KeyF":
+                    this.game.slime.focus()
+                    break;
             }
         });
         window.addEventListener("keyup", (e)=>{

@@ -10,11 +10,6 @@ export default class Level {
     drawfloor(){
         this.ctx.fillStyle = "black"
         this.ctx.fillRect(0, this.floorheight, this.floorwidth, this.floorfill)
-        this.drawbox()
     }
     
-    drawbox(){
-        this.ctx.fillStyle = '#FFB8D1'
-        this.ctx.fillRect(this.floorwidth/2, this.floorheight, this.floorwidth / 8, this.floorfill )
-    }
 }

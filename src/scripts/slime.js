@@ -1,3 +1,4 @@
+import {ColorPad, COLORS} from "./color_pads"
 
 const CONSTANTS = {
     GRAVITY: 0.98,
@@ -5,37 +6,9 @@ const CONSTANTS = {
     SLIME_RADIUS: 20
 }
 
-const COLORS = {
-    "red":{
-
-    },
-    "orange":{
-
-    },
-    "yellow":{
-
-    },
-    "green":{
-
-    },
-    "blue":{
-        baseshade: 'rgb(100,149,237, 0.7)'
-    },
-    "indigo":{
-
-    },
-    "violet":{
-        
-    },
-    "pink": {
-        baseshade: 'rgb'
-    }
-}
-
-
 export default class Slime{
 
-    constructor(pos, game, ctx, canvas){ 
+    constructor(pos, game, ctx, canvas){  
         this.pos = pos;
         this.vel = [0,0];
         this.radius = 20;
@@ -94,6 +67,10 @@ export default class Slime{
 
     crouch(){
         console.log("crouch")
+    }
+
+    focus(){
+        console.log(this.ctx.getImageData(this.pos[0],this.pos[1] + this.radius + 5, 1, 1))
     }
 
     isCollidedWithFloor(floorheight){
