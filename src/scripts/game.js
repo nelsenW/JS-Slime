@@ -7,7 +7,7 @@ export default class Game{
         this.gameSpeed = 20;
         this.ctx = ctx;
         this.canvas = canvas;
-        this.slime = new Slime([this.canvas.width/2 , this.canvas.height/2] ,this, this.ctx, this.canvas);
+        this.slime = new Slime([this.canvas.width/2 , this.canvas.height/2],this, this.ctx, this.canvas);
         this.level = new Level(this.ctx, this.canvas);
         this.colorpad = new ColorPad (this.ctx, this.canvas, "pink", [this.canvas.width, this.canvas.height * 0.9] )
     }

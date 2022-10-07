@@ -27,10 +27,8 @@ export default class Slime{
 
 
     drawSlime(ctx){
-        ctx.fillStyle = COLORS[this.color]['baseshade'];
-        ctx.beginPath();
-        ctx.arc(this.pos[0], this.pos[1], this.radius, 0, 2 * Math.PI);
-        ctx.fill();
+        const slimeSheet = document.querySelector("#slime-sheet")
+        this.ctx.drawImage(slimeSheet, 0, 0, 32, 32, this.pos[0], this.pos[1], 32, 32)
     }
 
     updatepos(){

@@ -1,7 +1,7 @@
 {
   "name": "javascript-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "Background:  Slime JS is a Vanilla Javascript game utilizing only HTML 5 canvas, JS, and CSS to create a rouguelite 2D platformer with the main character being a Slime. The main objective of the game is to escape the labratory you are being held in (against your will). The key mechanic of the game revolves around the slime being able to absorb properties of different panels and therefore be able to activate different abilities.",
   "main": "index.js",
   "browserslist": [
     "defaults"
@@ -22,8 +22,16 @@
     "mini-css-extract-plugin": "^2.6.1",
     "regenerator-runtime": "^0.13.9",
     "sass": "^1.55.0",
-    "sass-loader": "^13.0.2",
+    "sass-loader": "^13.1.0",
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nelsenW/Javascript-Project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nelsenW/Javascript-Project/issues"
+  },
+  "homepage": "https://github.com/nelsenW/Javascript-Project#readme"
 }
