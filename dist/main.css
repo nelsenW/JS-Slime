@@ -42,11 +42,17 @@ canvas {
   flex-direction: column;
 }
 
-.menu-navbar button {
+button {
   padding: 5px 20px;
   margin: 5px 5px;
   background-color: cornflowerblue;
   font-family: "Fredoka One";
+}
+
+#pause-menu {
+  display: none;
+  position: fixed;
+  flex-direction: column;
 }
 
 image#slime-sheet {

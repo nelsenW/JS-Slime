@@ -3,7 +3,13 @@ import {ColorPad, COLORS} from "./color_pads"
 const CONSTANTS = {
     GRAVITY: 0.98,
     TERMINAL_VEL: 35, 
-    SLIME_RADIUS: 20
+    SLIME_RADIUS: 40
+}
+
+const ANIMATIONS = {
+    'idle': 9,
+    'jump': 6,
+    'land': 8
 }
 
 export default class Slime{
@@ -11,24 +17,32 @@ export default class Slime{
     constructor(pos, game, ctx, canvas){  
         this.pos = pos;
         this.vel = [0,0];
-        this.radius = 20;
+        this.radius = CONSTANTS.SLIME_RADIUS;
         this.game = game;
         this.color = "blue";
         this.canvas = canvas;
         this.ctx = ctx;
-        this.jumpCount = 1;
-        this.jumpCountMax = 1
+        this.jumpCount = 0;
+        this.jumpCountMax = 1;
+        this.state = "idle";
+        this.landing = false
     }
 
-    animate(ctx){
+    animate(frame, stagger){
         this.updatepos();
-        this.drawSlime(ctx)
+        this.drawSlime(frame, stagger);
     }
 
 
-    drawSlime(ctx){
+    drawSlime(frame, stagger){
         const slimeSheet = document.querySelector("#slime-sheet")
-        this.ctx.drawImage(slimeSheet, 0, 0, 32, 32, this.pos[0], this.pos[1], 64, 64)
+        let position = Math.floor(frame/stagger) % ANIMATIONS[this.state]
+        let x = 128 * position
+        let y = Object.keys(ANIMATIONS).indexOf(this.state) * 128
+        this.ctx.drawImage(slimeSheet, x, y, 128, 128, this.pos[0], this.pos[1], 64, 64)
+        if (this.state === 'land' && position === 7){
+            this.landing = true
+        }
     }
 
     updatepos(){
@@ -44,8 +58,10 @@ export default class Slime{
         switch (slimeMove){
             case "jump":
                 if (this.jumpCount > 0){
-                    this.jumpCount--
+                    this.state = 'jump';
+                    this.jumpCount--;
                     this.vel[1] -= 60;
+                    this.landing = false;
                 }
                 break;
             case "move left":
@@ -74,11 +90,15 @@ export default class Slime{
     isCollidedWithFloor(floorheight){
         let distanceBetween = floorheight - (this.pos[1] + this.radius)
         if(distanceBetween < 0){
-            this.pos[1] = floorheight - this.radius
+            this.pos[1] = floorheight - this.radius;
             if(this.jumpCount < this.jumpCountMax){
-                this.jumpCount++
+                this.state = 'land'
+                this.jumpCount++;
             }
-            this.vel[1] = CONSTANTS.TERMINAL_VEL
+            if (this.landing){
+                this.state = 'idle'
+            }
+            this.vel[1] = CONSTANTS.TERMINAL_VEL;
         }
     }
 }
