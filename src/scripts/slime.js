@@ -65,8 +65,12 @@ export default class Slime{
             case "jump":
                 if (this.jumpCount > 0){
                     this.state = 'jump';
+                    if (this.color === 'pink' && this.jumpCount === 1){
+                        this.vel[1] -= 20;
+                    } else {
+                        this.vel[1] -= 60; 
+                    }
                     this.jumpCount--;
-                    this.vel[1] -= 60;
                     this.landing = false;
                 }
                 break;
@@ -97,9 +101,12 @@ export default class Slime{
             slimeScan.data[i] = 0
         }
         for(let i = 0; i < slimeScan.data.length; i+= 4){
-            slimeScan.data[i] *= (COLORS[color]['redMod']) / COLORS['blue']['redMod'];
-            slimeScan.data[i+1] *= (COLORS[color]['blueMod']) / COLORS['blue']['greenMod'];
-            slimeScan.data[i+2] *= (COLORS[color]['greenMod'])  / COLORS['blue']['blueMod'];
+            let shade = COLORS['blue'][slimeScan.data[i]]
+            if (shade){
+                slimeScan.data[i] = COLORS[color][shade][0];
+                slimeScan.data[i+1] = COLORS[color][shade][1];
+                slimeScan.data[i+2] = COLORS[color][shade][2]; 
+            }
         }
         for(let i = 3; i < slimeScan.data.length; i+=4){
             slimeScan.data[i] = slimeArr[(i+1)/4]
@@ -125,5 +132,11 @@ export default class Slime{
     floorColor(){
         let floorColor = this.ctx.getImageData(this.pos[0],this.pos[1] + this.radius, 1, 1).data
         return floorColor
+    }
+
+    resetStats(){
+        this.color = "blue";
+        this.jumpCountMax = 1;
+        this.jumpCount = 0;
     }
 }

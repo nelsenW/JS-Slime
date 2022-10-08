@@ -43,7 +43,7 @@ export default class GameView {
         window.addEventListener("keydown", (e) => {
             switch(e.code){
                 case "Space":
-                    this.game.slime.color = "blue";
+                    this.game.slime.resetStats();
                     break;
                 case "ArrowUp":
                     if(this.game.slime.landing === true){
@@ -61,8 +61,7 @@ export default class GameView {
                     this.game.slime.move("crouch");
                     break;
                 case "KeyF":
-                      let floorColor = this.game.slime.floorColor()
-                      console.log(floorColor)
+                      let floorColor = this.game.slime.floorColor();
                       if(this.game.slime.color === "blue"){
                         switch(floorColor[0]){
                         case 215:
@@ -77,13 +76,11 @@ export default class GameView {
                         case 11:
                             this.game.slime.color = "green";
                             break;
-                        case 12:
-                            this.game.slime.color = "indigo";
-                            break;
                         case 57:
                             this.game.slime.color = "violet";
                             break;
                         case 255:
+                            this.game.slime.jumpCountMax = 2
                             this.game.slime.color = "pink";
                             break;
                       }

@@ -31,11 +31,16 @@ export const COLORS = {
         darkerShade:[6,96,36],
     },
     "blue":{
-        lighterShade: [17,62,146],
-        lightShade: [24,86,201],
+        lighterShade: [163,192,244],
+        lightShade: [109,154,238],
         baseShade: [54,11,231],
-        darkShade: [109,154,238],
-        darkerShade: [164,192,244]
+        darkShade: [24,86,201],
+        darkerShade: [17,62,146],
+        163:'lighterShade',
+        109:'lightShade',
+        54:'baseShade',
+        24:'darkShade',
+        17:'darkerShade'
     },
     "violet":{
         lighterShade: [112,95,171],
@@ -59,12 +64,13 @@ export class ColorPad{
         this.ctx = ctx;
         this.canvas = canvas;
         this.pos = pos;
-        this.color = COLORS[color]['baseshade'];
+        this.color = COLORS[color]['baseShade'];
         this.level = level
     }
 
     drawPad(){
-        this.ctx.fillStyle = this.color
+        // debugger
+        this.ctx.fillStyle = `rgb(${this.color[0]}, ${this.color[1]},${this.color[2]})`;
         this.ctx.fillRect(this.pos[0], this.pos[1], this.canvas.width / 8, 10 )
     }
 }

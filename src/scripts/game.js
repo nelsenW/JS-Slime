@@ -14,8 +14,6 @@ export default class Game{
 
     draw(ctx, canvas){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        const bluePalette = document.querySelector("#blue-pallette");
-        this.ctx.drawImage(bluePalette, 0, 0);
         this.level.draw()
         this.slime.animate(this.frame, this.stagger);
         this.frame++

@@ -13,8 +13,6 @@ export default class Level {
         new ColorPad (this.ctx, this.canvas, "orange", [this.canvas.width * 1/8, this.canvas.height * 0.9], this.level),
         new ColorPad (this.ctx, this.canvas, "yellow", [this.canvas.width * 2/8, this.canvas.height * 0.9], this.level),
         new ColorPad (this.ctx, this.canvas, "green", [this.canvas.width * 3/8, this.canvas.height * 0.9], this.level),
-        new ColorPad (this.ctx, this.canvas, "blue", [this.canvas.width * 4/8, this.canvas.height * 0.9], this.level),
-        new ColorPad (this.ctx, this.canvas, "indigo", [this.canvas.width * 5/8, this.canvas.height * 0.9], this.level),
         new ColorPad (this.ctx, this.canvas, "violet", [this.canvas.width * 6/8, this.canvas.height * 0.9], this.level),
         new ColorPad (this.ctx, this.canvas, "pink", [this.canvas.width * 7/8, this.canvas.height * 0.9], this.level),
     ]
