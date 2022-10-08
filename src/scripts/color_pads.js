@@ -1,65 +1,70 @@
 export const COLORS = {
     "red":{
-        baseshade: 'rgb(215,38,61, 0.7)',
-        redMod: 215,
-        greenMod: 38,
-        blueMod: 61
+        lighterShade: [237,151,162],
+        lightShade: [227,99,116],
+        baseShade: [215,38,61],
+        darkShade: [173,31,50],
+        darkerShade: [121,21,35]
     },
     "orange":{
-        baseshade: 'rgb(235,94,40, 0.7)',
-        redMod: 235,
-        greenMod: 94,
-        blueMod: 40
+        lighterShade: [246,186,162],
+        lightShade: [241,144,106],
+        baseShade: [235,94,40],
+        darkShade: [205,72,19],
+        darkerShade: [149,52,14]
+        
     },
     "yellow":{
-        baseshade: 'rgb(238,198,67, 0.7)',
-        redMod: 238,
-        greenMod: 198,
-        blueMod: 67
+        lighterShade: [248,232,180],
+        lightShade: [243,215,124],
+        baseShade:[238,198,67],
+        darkShade: [224,177,21],
+        darkerShade:[168,132,16]
+
+
     },
     "green":{
-        baseshade: 'rgb(12,202,74, 0.7)',
-        redMod: 12,
-        greenMod: 202,
-        blueMod: 74
+        lighterShade:[101,246,149],
+        lightShade:[43,243,110],
+        baseShade:[12,202,74],
+        darkShade:[9,154,57],
+        darkerShade:[6,96,36],
     },
     "blue":{
-        baseshade: 'rgb(100,149,237, 0.7)',
-        redMod: 100,
-        greenMod: 149,
-        blueMod: 237
-    },
-    "indigo":{
-        baseshade: 'rgb(13,27,42, 0.7)',
-        redMod: 13,
-        greenMod: 27,
-        blueMod: 42
+        lighterShade: [17,62,146],
+        lightShade: [24,86,201],
+        baseShade: [54,11,231],
+        darkShade: [109,154,238],
+        darkerShade: [164,192,244]
     },
     "violet":{
-        baseshade: 'rgb(57,47,90, 0.7)',
-        redMod: 57,
-        greenMod: 47,
-        blueMod: 90
+        lighterShade: [112,95,171],
+        lightShade: [85,70,134],
+        baseShade: [57,47,90], 
+        darkShade: [34,28,53], 
+        darkerShade: [9,7,13]
     },
     "pink": {
-        baseshade: 'rgb(255,184,209, 0.7)',
-        redMod: 255,
-        greenMod: 184,
-        blueMod: 209
+        lighterShade: [255,184,209],
+        lightShade: [255,133,175],  
+        baseShade: [255,71,136],   
+        darkShade: [255,31,109],   
+        darkerShade: [204,0,71] 
     }
 }
 
 
-export class ColorPad {
-    constructor(ctx, canvas, color, pos){
+export class ColorPad{
+    constructor(ctx, canvas, color, pos, level){
         this.ctx = ctx;
         this.canvas = canvas;
         this.pos = pos;
-        this.color = COLORS[color]['baseshade']
+        this.color = COLORS[color]['baseshade'];
+        this.level = level
     }
 
-    drawPad(color){
-        this.ctx.fillStyle = COLORS[color].baseshade
-        this.ctx.fillRect(this.floorwidth/2, this.floorheight, this.floorwidth / 8, this.floorfill )
+    drawPad(){
+        this.ctx.fillStyle = this.color
+        this.ctx.fillRect(this.pos[0], this.pos[1], this.canvas.width / 8, 10 )
     }
 }

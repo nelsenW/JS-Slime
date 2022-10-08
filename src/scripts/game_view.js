@@ -43,7 +43,8 @@ export default class GameView {
         window.addEventListener("keydown", (e) => {
             switch(e.code){
                 case "Space":
-                    this.game.slime.color = "blue"
+                    this.game.slime.color = "blue";
+                    break;
                 case "ArrowUp":
                     if(this.game.slime.landing === true){
                         this.game.frame = 0;
@@ -61,22 +62,33 @@ export default class GameView {
                     break;
                 case "KeyF":
                       let floorColor = this.game.slime.floorColor()
-                      switch(floorColor[0]){
-                        case 235:
+                      console.log(floorColor)
+                      if(this.game.slime.color === "blue"){
+                        switch(floorColor[0]){
+                        case 215:
                             this.game.slime.color = "red";
-                        case 238:
+                            break;
+                        case 235:
                             this.game.slime.color = "orange";
-                        case 12:
+                            break;
+                        case 237:
                             this.game.slime.color = "yellow";
-                        case 100:
+                            break;
+                        case 11:
                             this.game.slime.color = "green";
-                        case 13:
+                            break;
+                        case 12:
                             this.game.slime.color = "indigo";
+                            break;
                         case 57:
                             this.game.slime.color = "violet";
+                            break;
                         case 255:
                             this.game.slime.color = "pink";
+                            break;
                       }
+                      }
+                      
                     break;
                 case "KeyP":
                     this.pause();

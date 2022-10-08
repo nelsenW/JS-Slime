@@ -91,11 +91,19 @@ export default class Slime{
 
     focus(color){
         let slimeScan = this.ctx.getImageData(this.pos[0],this.pos[1], 64, 64)
-        for(let i = 0; i < slimeScan.data.length; i+= 4){
-            slimeScan.data[i] *= (ColorPad.COLORS[color].redMod / ColorPad.COLORS['blue'].redMod)
-            slimeScan.data[i+1] *= (ColorPad.COLORS[color].blueMod / ColorPad.COLORS['blue'].greenMod)
-            slimeScan.data[i+2] *= (ColorPad.COLORS[color].greenMod / ColorPad.COLORS['blue'].blueMod)
+        let slimeArr = []
+        for(let i = 3; i < slimeScan.data.length; i+=4){
+            slimeArr.push(slimeScan.data[i])
+            slimeScan.data[i] = 0
         }
+        for(let i = 0; i < slimeScan.data.length; i+= 4){
+            slimeScan.data[i] *= (COLORS[color]['redMod']) / COLORS['blue']['redMod'];
+            slimeScan.data[i+1] *= (COLORS[color]['blueMod']) / COLORS['blue']['greenMod'];
+            slimeScan.data[i+2] *= (COLORS[color]['greenMod'])  / COLORS['blue']['blueMod'];
+        }
+        for(let i = 3; i < slimeScan.data.length; i+=4){
+            slimeScan.data[i] = slimeArr[(i+1)/4]
+        }   
         return slimeScan
     }
 
