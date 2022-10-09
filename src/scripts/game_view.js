@@ -90,6 +90,12 @@ export default class GameView {
                 case "KeyP":
                     this.pause();
                     break;
+                case "KeyA":
+                    this.game.slime.state = 'meleeAttack';
+                    break;
+                case "KeyS":
+                    this.game.slime.state = 'rangedAttack';
+                    break;
             }
         });
         window.addEventListener("keyup", (e)=>{

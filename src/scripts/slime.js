@@ -7,6 +7,13 @@ const CONSTANTS = {
 }
 
 const ANIMATIONS = {
+    'rangedAttack': 14,
+    'meleeAttack': 10,
+    'death': 11,
+    'dash': 4,
+    'hurt': 2,
+    'move': 7,
+    'crouch': 9,
     'idle': 9,
     'jump': 6,
     'land': 8
@@ -75,10 +82,12 @@ export default class Slime{
                 }
                 break;
             case "move left":
+                this.state = 'move'
                 this.vel[0] = -8;
                 break;
             case "move right":
                 this.vel[0] = 8;
+                this.state = 'move'
                 break;
             case "crouch":
                 this.crouch()
@@ -90,7 +99,7 @@ export default class Slime{
     }
 
     crouch(){
-        console.log("crouch")
+        this.state = 'crouch'
     }
 
     focus(color){
