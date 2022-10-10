@@ -22,7 +22,7 @@ export default class Slime{
         this.color = "blue";
         this.canvas = canvas;
         this.ctx = ctx;
-        this.gravity = 0.98;
+        this.gravity = 0;
         this.terminal_vel = 25;
         this.grav_dir = 1;
         this.jumpCount = 0;

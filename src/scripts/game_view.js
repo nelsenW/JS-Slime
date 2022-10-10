@@ -11,7 +11,6 @@ export default class GameView {
     }
 
     start(){
-        this.bindKeyHandlers();
         window.requestAnimationFrame(this.gameLoop.bind(this))
     }
 
