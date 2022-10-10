@@ -27,6 +27,25 @@ canvas {
     left: 47%;
 }
 
+.about-menu {
+    color: cornflowerblue;
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 40%;
+    left: 47%;
+}
+
+.controls-menu {
+    color: cornflowerblue;
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 40%;
+    left: 47%;
+}
+
+
 .title {
     display: flex;
     align-items: center;
@@ -61,4 +80,21 @@ image#blue-palette{
     
 image#slime-sheet{
     display: none;
+}
+
+fieldset{
+    border: 1px solid slategray;
+    border-radius: 10%;
+}
+
+fieldset legend{
+    display: flex;
+    justify-content: space-between;
+}
+
+#close-button{
+    padding:0;
+    margin:0 2px;
+    position: absolute;
+    left: 85%;
 }
