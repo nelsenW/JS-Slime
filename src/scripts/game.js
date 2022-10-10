@@ -9,14 +9,37 @@ export default class Game{
         this.slime = new Slime([this.canvas.width/2 , this.canvas.height/2],this, this.ctx, this.canvas);
         this.level = new Level(this.ctx, this.canvas);
         this.frame = 0;
-        this.stagger = 5
+        this.stagger = 5;
+        this.allObjects = [];
+        this.generateLevel();
+    }
+
+    step(){
+       this.moveObjects();
+       this.checkCollisions(); 
     }
 
     draw(ctx, canvas){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        this.level.draw()
-        this.slime.animate(this.frame, this.stagger);
+        this.allObjects.forEach( obj => {
+            obj.animate(this.frame, this.stagger)
+        })
         this.frame++
+    }
+
+    moveObjects(){
+
+    }
+
+    checkCollisions(){
+        for(let i = 0; i < this.allObjects.length; i++){
+            this.slime.isCollidedWith(this.allObjects[i])
+        }
+        
+    }
+
+    generateLevel(){
+        this.allObjects = this.allObjects.concat(this.level.objects).concat(this.slime)
     }
 
 } 

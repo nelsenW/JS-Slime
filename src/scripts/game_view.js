@@ -17,6 +17,7 @@ export default class GameView {
 
     gameLoop() {
         if(this.paused) return;
+        this.game.step();
         this.game.draw(this.ctx, this.canvas);
         window.requestAnimationFrame(this.gameLoop.bind(this))
     }
@@ -61,25 +62,29 @@ export default class GameView {
                     this.game.slime.move("crouch");
                     break;
                 case "KeyF":
-                      let floorColor = this.game.slime.floorColor();
+                      let floorColor = this.game.slime.floorColor
                       if(this.game.slime.color === "blue"){
-                        switch(floorColor[0]){
-                        case 215:
+                        switch(floorColor){
+                        case 'red':
+                            this.game.slime.damage *= this.game.slime.redDmgMod
                             this.game.slime.color = "red";
                             break;
-                        case 235:
+                        case 'orange':
                             this.game.slime.color = "orange";
                             break;
-                        case 237:
+                        case 'yellow':
                             this.game.slime.color = "yellow";
+                            this.game.slime.dashCountMax = 1
                             break;
-                        case 11:
+                        case 'green':
                             this.game.slime.color = "green";
+                            this.game.slime.healthRegen = true;
                             break;
-                        case 57:
+                        case 'violet':
                             this.game.slime.color = "violet";
+                            this.game.slime.ignoreCollision = true
                             break;
-                        case 255:
+                        case 'pink':
                             this.game.slime.jumpCountMax = 2
                             this.game.slime.color = "pink";
                             break;
@@ -101,10 +106,11 @@ export default class GameView {
         window.addEventListener("keyup", (e)=>{
             switch(e.code){
                 case "ArrowRight":
-                    this.game.slime.move("stop")
+                    this.game.slime.move("stop");
                     break;
                 case "ArrowLeft": 
-                    this.game.slime.move("stop")
+                    this.game.slime.move("stop");
+
                     break;
         }
         });

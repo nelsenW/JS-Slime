@@ -1,11 +1,5 @@
 import {ColorPad, COLORS} from "./color_pads"
 
-const CONSTANTS = {
-    GRAVITY: 0.98,
-    TERMINAL_VEL: 35, 
-    SLIME_RADIUS: 40
-}
-
 const ANIMATIONS = {
     'rangedAttack': 14,
     'meleeAttack': 10,
@@ -24,15 +18,26 @@ export default class Slime{
     constructor(pos, game, ctx, canvas){  
         this.pos = pos;
         this.vel = [0,0];
-        this.radius = CONSTANTS.SLIME_RADIUS;
         this.game = game;
         this.color = "blue";
         this.canvas = canvas;
         this.ctx = ctx;
+        this.gravity = 0.98;
+        this.terminal_vel = 35;
+        this.grav_dir = 1;
         this.jumpCount = 0;
         this.jumpCountMax = 1;
         this.state = "idle";
-        this.landing = false
+        this.landing = false;
+        this.health = 64;
+        this.radius = this.health / 2;
+        this.healthRegen = false;
+        this.damage = 10;
+        this.redDmgMod = 2;
+        this.ignoreCollision = false;
+        this.dashCount = 0;
+        this.dashCountMax = 0;
+        this.floorColor = null;
     }
 
     animate(frame, stagger){
@@ -47,11 +52,11 @@ export default class Slime{
         let x = 128 * position
         let y = Object.keys(ANIMATIONS).indexOf(this.state) * 128
         if (this.color !== "blue"){
-            this.ctx.drawImage(slimeSheet, x, y, 128, 128, this.pos[0], this.pos[1], 64, 64);
+            this.ctx.drawImage(slimeSheet, x, y, 128, 128, this.pos[0], this.pos[1], this.health, this.health);
             let focused = this.focus(this.color);
             this.ctx.putImageData(focused, this.pos[0], this.pos[1]);
         } else {
-            this.ctx.drawImage(slimeSheet, x, y, 128, 128, this.pos[0], this.pos[1], 64, 64);
+            this.ctx.drawImage(slimeSheet, x, y, 128, 128, this.pos[0], this.pos[1], this.health, this.health);
         }
         if (this.state === 'land' && position === 7){
             this.landing = true
@@ -60,11 +65,10 @@ export default class Slime{
 
     updatepos(){
         this.pos[0] += this.vel[0];
-        if (this.vel[1] < CONSTANTS.TERMINAL_VEL){
-            this.vel[1] += CONSTANTS.GRAVITY
+        if (this.vel[1] < this.terminal_vel){
+            this.vel[1] += this.gravity
         }
         this.pos[1] += this.vel[1];
-        this.isCollidedWithFloor((this.canvas.height * 0.9))
     }
 
     move(slimeMove){
@@ -93,6 +97,7 @@ export default class Slime{
                 this.crouch()
                 break;
             case "stop":
+                this.state = 'idle'
                 this.vel[0] = 0;
                 break;
         }
@@ -123,29 +128,38 @@ export default class Slime{
         return slimeScan
     }
 
-    isCollidedWithFloor(floorheight){
-        let distanceBetween = floorheight - (this.pos[1] + this.radius)
-        if(distanceBetween < 0){
-            this.pos[1] = floorheight - this.radius;
+    isCollidedWith(otherObject){
+        let otherX = otherObject.pos[0]
+        let otherY = otherObject.pos[1]
+
+        const distanceBetween = (other, val) => {
+            return other - (this.pos[val] + this.radius )
+        }
+
+        if(distanceBetween(otherY, 1) < 0){
+            this.pos[1] = otherY - this.radius;
             if(this.jumpCount < this.jumpCountMax){
-                this.state = 'land'
+                this.state = 'land';
                 this.jumpCount++;
             }
-            if (this.landing){
-                this.state = 'idle'
-            }
-            this.vel[1] = CONSTANTS.TERMINAL_VEL;
+            // if(this.landing){
+            //     this.state = 'idle'
+            // }
+            this.vel[this.grav_dir] = this.terminal_vel 
         }
-    }
 
-    floorColor(){
-        let floorColor = this.ctx.getImageData(this.pos[0],this.pos[1] + this.radius, 1, 1).data
-        return floorColor
     }
+    
 
     resetStats(){
         this.color = "blue";
         this.jumpCountMax = 1;
         this.jumpCount = 0;
+        this.ignoreCollision = false;
+        this.dashCount = 0;
+        this.dashCountMax = 0;
+        this.healthRegen = false;
+        this.damage /= this.redDmgMod
+        this.gravity = 0.98;
     }
 }
