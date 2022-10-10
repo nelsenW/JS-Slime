@@ -42,11 +42,6 @@ export default class Slime{
     }
 
     animate(frame, stagger){
-        this.drawSlime(frame, stagger);
-    }
-
-
-    drawSlime(frame, stagger){
         const slimeSheet = document.querySelector("#slime-sheet")
         let position = Math.floor(frame/stagger) % ANIMATIONS[this.state]
         if (this.state === 'crouch' && frame === 45){

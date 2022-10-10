@@ -71,9 +71,37 @@ export class ColorPad{
         this.height = 20;
     }
 
-    animate(){
-        // debugger
-        this.ctx.fillStyle = `rgb(${this.baseShade[0]}, ${this.baseShade[1]},${this.baseShade[2]})`;
-        this.ctx.fillRect(this.pos[0], this.pos[1], this.width, this.height )
+    animate(frame,stagger){
+        const padSheet = document.querySelector("#pad-sheet")
+        let position = Math.floor(frame/stagger) % 4
+        let x = 32 * position
+        if (this.color !== "blue"){
+            this.ctx.drawImage(padSheet, x, 0, 32, 32, this.pos[0], this.pos[1], this.width, this.height);
+            let newColor = this.switchColor(this.color);
+            this.ctx.putImageData(newColor, this.pos[0], this.pos[1]);
+        } else {
+            this.ctx.drawImage(padSheet, x, y, 32, 32, this.pos[0], this.pos[1], this.width, this.height);
+        }
+    }
+
+    switchColor(color){
+        let padScan = this.ctx.getImageData(this.pos[0],this.pos[1], 64, 64)
+        let padArr = []
+        for(let i = 3; i < padScan.data.length; i+=4){
+            padArr.push(padScan.data[i])
+            padScan.data[i] = 0
+        }
+        for(let i = 0; i < padScan.data.length; i+= 4){
+            let shade = COLORS['blue'][padScan.data[i]]
+            if (shade){
+                padScan.data[i] = COLORS[color][shade][0];
+                padScan.data[i+1] = COLORS[color][shade][1];
+                padScan.data[i+2] = COLORS[color][shade][2]; 
+            }
+        }
+        for(let i = 3; i < padScan.data.length; i+=4){
+            padScan.data[i] = padArr[(i+1)/4]
+        }   
+        return padScan
     }
 }
