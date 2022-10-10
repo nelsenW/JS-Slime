@@ -23,14 +23,14 @@ export default class Slime{
         this.canvas = canvas;
         this.ctx = ctx;
         this.gravity = 0.98;
-        this.terminal_vel = 35;
+        this.terminal_vel = 25;
         this.grav_dir = 1;
         this.jumpCount = 0;
         this.jumpCountMax = 1;
         this.state = "idle";
         this.landing = false;
         this.health = 64;
-        this.radius = this.health / 2;
+        this.radius = this.health / 2 - (this.health/12);
         this.healthRegen = false;
         this.damage = 10;
         this.redDmgMod = 2;
@@ -38,10 +38,10 @@ export default class Slime{
         this.dashCount = 0;
         this.dashCountMax = 0;
         this.floorColor = null;
+        this.moving = false
     }
 
     animate(frame, stagger){
-        this.updatepos();
         this.drawSlime(frame, stagger);
     }
 
@@ -61,9 +61,13 @@ export default class Slime{
         if (this.state === 'land' && position === 7){
             this.landing = true
         }
+        if (this.state === 'dash' && position === 2){
+            this.vel /= 3
+            this.state = 'idle'
+        }
     }
 
-    updatepos(){
+    updatepos(){ //calling checkcollisions before calling updatepos 
         this.pos[0] += this.vel[0];
         if (this.vel[1] < this.terminal_vel){
             this.vel[1] += this.gravity
@@ -86,10 +90,12 @@ export default class Slime{
                 }
                 break;
             case "move left":
+                this.moving = true;
                 this.state = 'move'
                 this.vel[0] = -8;
                 break;
             case "move right":
+                this.moving = true;
                 this.vel[0] = 8;
                 this.state = 'move'
                 break;
@@ -97,8 +103,14 @@ export default class Slime{
                 this.crouch()
                 break;
             case "stop":
+                this.moving = false;
                 this.state = 'idle'
                 this.vel[0] = 0;
+                break;
+            case "dash":
+                this.dashCount--
+                this.state = 'dash'
+                this.vel[0] *= 3;
                 break;
         }
     }
@@ -129,23 +141,32 @@ export default class Slime{
     }
 
     isCollidedWith(otherObject){
-        let otherX = otherObject.pos[0]
-        let otherY = otherObject.pos[1]
-
-        const distanceBetween = (other, val) => {
-            return other - (this.pos[val] + this.radius )
-        }
-
-        if(distanceBetween(otherY, 1) < 0){
-            this.pos[1] = otherY - this.radius;
+        let otherX = otherObject.pos[0];
+        let otherX2 = otherObject.pos[0] + otherObject.width;
+        let otherY = otherObject.pos[1];
+        let otherY2 = otherObject.pos[1] + otherObject.height;
+        if (
+        this.pos[1] + (2 * this.radius) <= otherY2 + this.terminal_vel && //above bottom boundary
+        this.pos[1] + (2 * this.radius) >= otherY - this.terminal_vel && // below yop boundary 
+        this.pos[0] + (this.radius) >= otherX && // slime halfway off to left
+        this.pos[0] + this.radius <= otherX2 && 
+        this.vel[1] > 0 //slime halfway off to right
+        ){
+            this.pos[1] = otherY - (this.radius * 2) - this.terminal_vel;
             if(this.jumpCount < this.jumpCountMax){
                 this.state = 'land';
                 this.jumpCount++;
             }
-            // if(this.landing){
-            //     this.state = 'idle'
-            // }
-            this.vel[this.grav_dir] = this.terminal_vel 
+            if(this.dashCount < this.dashCountMax ){
+                this.dashCount++;
+            }
+            this.vel[1] = this.terminal_vel;  
+            if(otherObject instanceof ColorPad){
+                this.floorColor = otherObject.color
+            }
+            if (this.landing && !this.moving){
+                this.state = 'idle'
+            }
         }
 
     }

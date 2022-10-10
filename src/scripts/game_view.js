@@ -61,6 +61,13 @@ export default class GameView {
                 case "ArrowDown":
                     this.game.slime.move("crouch");
                     break;
+                case "KeyD":
+                    if(this.game.slime.dashCount >= this.game.slime.dashCountMax && this.game.slime.color === 'yellow'){
+                        this.game.frame = 0;
+                        this.game.slime.move("dash");
+                    }
+                   
+                    break;
                 case "KeyF":
                       let floorColor = this.game.slime.floorColor
                       if(this.game.slime.color === "blue"){
@@ -73,8 +80,8 @@ export default class GameView {
                             this.game.slime.color = "orange";
                             break;
                         case 'yellow':
+                            this.game.slime.dashCountMax = 1;
                             this.game.slime.color = "yellow";
-                            this.game.slime.dashCountMax = 1
                             break;
                         case 'green':
                             this.game.slime.color = "green";

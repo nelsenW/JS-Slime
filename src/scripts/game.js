@@ -28,7 +28,7 @@ export default class Game{
     }
 
     moveObjects(){
-
+       this.slime.updatepos()
     }
 
     checkCollisions(){

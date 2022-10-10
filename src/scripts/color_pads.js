@@ -66,12 +66,14 @@ export class ColorPad{
         this.pos = pos;
         this.color = color; 
         this.baseShade = COLORS[color]['baseShade'];
-        this.level = level
+        this.level = level;
+        this.width = 200;
+        this.height = 20;
     }
 
     animate(){
         // debugger
         this.ctx.fillStyle = `rgb(${this.baseShade[0]}, ${this.baseShade[1]},${this.baseShade[2]})`;
-        this.ctx.fillRect(this.pos[0], this.pos[1], this.canvas.width / 8, 10 )
+        this.ctx.fillRect(this.pos[0], this.pos[1], this.width, this.height )
     }
 }
