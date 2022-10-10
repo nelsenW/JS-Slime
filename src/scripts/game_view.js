@@ -58,6 +58,11 @@ export default class GameView {
                     this.game.slime.move("move right");
                     break;
                 case "ArrowDown":
+                    if (this.game.frame > 45){
+                        this.game.frame = 0
+                    } else if (this.game.frame > 40){
+                        this.game.frame = 40
+                    }
                     this.game.slime.move("crouch");
                     break;
                 case "KeyD":
@@ -102,10 +107,12 @@ export default class GameView {
                     this.pause();
                     break;
                 case "KeyA":
-                    this.game.slime.state = 'meleeAttack';
+                    this.game.slime.move('meleeAttack');
+                    this.game.frame = 0;
                     break;
                 case "KeyS":
-                    this.game.slime.state = 'rangedAttack';
+                    this.game.slime.move('rangedAttack');
+                    this.game.frame = 0;
                     break;
             }
         });
@@ -116,7 +123,9 @@ export default class GameView {
                     break;
                 case "ArrowLeft": 
                     this.game.slime.move("stop");
-
+                    break;
+                case "ArrowDown":
+                    this.game.slime.move("stop");
                     break;
         }
         });

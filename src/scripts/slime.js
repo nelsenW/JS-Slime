@@ -23,14 +23,14 @@ export default class Slime{
         this.canvas = canvas;
         this.ctx = ctx;
         this.gravity = 0;
-        this.terminal_vel = 25;
+        this.terminal_vel = 35;
         this.grav_dir = 1;
         this.jumpCount = 0;
         this.jumpCountMax = 1;
         this.state = "idle";
         this.landing = false;
         this.health = 64;
-        this.radius = this.health / 2 - (this.health/12);
+        this.radius = this.health / 2;
         this.healthRegen = false;
         this.damage = 10;
         this.redDmgMod = 2;
@@ -49,6 +49,9 @@ export default class Slime{
     drawSlime(frame, stagger){
         const slimeSheet = document.querySelector("#slime-sheet")
         let position = Math.floor(frame/stagger) % ANIMATIONS[this.state]
+        if (this.state === 'crouch' && frame === 45){
+            position = 8
+        }
         let x = 128 * position
         let y = Object.keys(ANIMATIONS).indexOf(this.state) * 128
         if (this.color !== "blue"){
@@ -60,10 +63,15 @@ export default class Slime{
         }
         if (this.state === 'land' && position === 7){
             this.landing = true
-        }
-        if (this.state === 'dash' && position === 2){
-            this.vel /= 3
+        } else if (this.state === 'dash' && position === 3){
+            this.vel[0] /= 3;
             this.state = 'idle'
+        } else if (this.state === 'rangedAttack' && position === 13){
+            this.rangedAttack()
+            this.moving = false;
+        } else if (this.state === 'meleeAttack' && position === 9){
+            this.meleeAttack()
+            this.moving = false
         }
     }
 
@@ -83,6 +91,7 @@ export default class Slime{
                     if (this.color === 'pink' && this.jumpCount === 1){
                         this.vel[1] -= 20;
                     } else {
+                        this.vel[1] = this.terminal_vel;  
                         this.vel[1] -= 60; 
                     }
                     this.jumpCount--;
@@ -112,12 +121,29 @@ export default class Slime{
                 this.state = 'dash'
                 this.vel[0] *= 3;
                 break;
+            case "meleeAttack":
+                this.moving = true;
+                this.state = 'meleeAttack'
+                break;
+            case "rangedAttack":
+                this.moving = true;
+                this.state = 'rangedAttack'
+                break;
         }
     }
 
     crouch(){
-        this.state = 'crouch'
+        this.state = 'crouch';
+        this.moving = true;
     }
+
+    meleeAttack(){
+    }
+
+    rangedAttack()  {
+
+    }
+    
 
     focus(color){
         let slimeScan = this.ctx.getImageData(this.pos[0],this.pos[1], 64, 64)
@@ -146,13 +172,13 @@ export default class Slime{
         let otherY = otherObject.pos[1];
         let otherY2 = otherObject.pos[1] + otherObject.height;
         if (
-        this.pos[1] + (2 * this.radius) <= otherY2 + this.terminal_vel && //above bottom boundary
+        this.pos[1] + (2 * this.radius) <= otherY2 + (this.terminal_vel * 2) && //above bottom boundary
         this.pos[1] + (2 * this.radius) >= otherY - this.terminal_vel && // below yop boundary 
         this.pos[0] + (this.radius) >= otherX && // slime halfway off to left
         this.pos[0] + this.radius <= otherX2 && 
         this.vel[1] > 0 //slime halfway off to right
         ){
-            this.pos[1] = otherY - (this.radius * 2) - this.terminal_vel;
+            this.pos[1] = otherY - (this.radius);
             if(this.jumpCount < this.jumpCountMax){
                 this.state = 'land';
                 this.jumpCount++;
@@ -160,7 +186,6 @@ export default class Slime{
             if(this.dashCount < this.dashCountMax ){
                 this.dashCount++;
             }
-            this.vel[1] = this.terminal_vel;  
             if(otherObject instanceof ColorPad){
                 this.floorColor = otherObject.color
             }

@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", () =>{
     const startGame = document.getElementById("startgame");
     const startMenu = document.querySelector(".start-menu");
     const menuNav = document.querySelector(".menu-navbar");
-    const closeButton = document.getElementById("close-button")
+    const closeButton = document.getElementById("close-button");
+    const closeButton2 = document.getElementById("close-button2");
     const about = document.getElementById('about')
     const aboutMenu = document.querySelector('.about-menu');
     const controls = document.querySelector('#controls')
@@ -41,16 +42,20 @@ document.addEventListener("DOMContentLoaded", () =>{
     about.addEventListener("click", () => {
         startMenu.style.display = 'none';
         aboutMenu.style.display = 'flex';
-    })
+    });
 
     controls.addEventListener("click", () => {
         startMenu.style.display = 'none';
         controlsMenu.style.display = 'flex';
-    })
+    });
 
     closeButton.addEventListener("click", () =>{
         aboutMenu.style.display = 'none';
         startMenu.style.display = 'flex';
-        controlsMenu.style.display = 'none'
-    })
+    });
+
+    closeButton2.addEventListener("click", () =>{
+        startMenu.style.display = 'flex';
+        controlsMenu.style.display = 'none';
+    });
 })
