@@ -166,6 +166,8 @@ export default class Slime{
         let otherX2 = otherObject.pos[0] + otherObject.width;
         let otherY = otherObject.pos[1];
         let otherY2 = otherObject.pos[1] + otherObject.height;
+        if ( //implement better collisions for platforiming
+        )
         if (
         this.pos[1] + (this.radius) <= otherY2 + this.terminal_vel && //above bottom boundary
         this.pos[1] + (this.radius) >= otherY - this.terminal_vel - (this.radius / 2) && // below yop boundary 

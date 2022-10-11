@@ -150,7 +150,7 @@ div#game-over-menu {
 }
 
 #cursor {
-  margin: 0;
+  margin: 0 0 0 10px;
   padding: 0;
   display: inline-block;
   width: 2px;
@@ -158,6 +158,7 @@ div#game-over-menu {
   border: 0.15em solid #1589FF;
   background-color: #1589FF;
   animation: blink 0.5s linear infinite alternate;
+  overflow: hidden;
 }
 
 @keyframes blink {

@@ -56,12 +56,11 @@ export const COLORS = {
 };
 
 export class ColorPad {
-	constructor(ctx, color, pos, level) {
+	constructor(ctx, color, pos) {
 		this.ctx = ctx;
 		this.pos = pos;
 		this.color = color;
 		this.baseShade = COLORS[color]['baseShade'];
-		this.level = level;
 		this.width = 64;
 		this.height = 22;
 	}
