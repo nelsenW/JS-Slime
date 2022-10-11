@@ -166,6 +166,9 @@ export default class Slime{
             while(this.horizontalCollision(otherObject)){
                 this.pos[0] -= (Math.sign(this.vel[0]))
             }
+            if(otherObject instanceof Door)(
+                this.exited = true
+            )
         }
 
         if (this.verticalCollision(otherObject)){
@@ -188,8 +191,10 @@ export default class Slime{
             if (this.landing && !this.moving){
                 this.state = 'idle'
             }
+            if(otherObject instanceof Door)(
+                this.exited = true
+            )
         } 
-        
 
     }
 

@@ -4,13 +4,13 @@ import Level from "./level.js";
 const LEVELS = {
     1: {
         monitorText: 'Welcome to the test lab subject #8X75G2, please proceed to the right to begin testing...',
-        tileArray: ['##',
-                    '##',
-                    '##',
-                    '##',
-                    '##',
-                    '##',
-                    '##']
+        tileArray: ['#################',
+                    '#               #',
+                    '#               #',
+                    '#               #',
+                    '#               #',
+                    '#               #',
+                    '#################']
     },
     2: {
         monitorText: 'For each test all we need to do is make it to the other side of the room...',
@@ -65,6 +65,9 @@ export default class Game{
     checkCollisions(){
         for(let i = 0; i < this.allObjects.length; i++){
             this.slime.isCollidedWith(this.allObjects[i])
+            if(this.slime.exited){
+                this.nextLevel()
+            }
         }
         
     }
@@ -77,6 +80,11 @@ export default class Game{
             return true 
         }
         return false
+    }
+
+    nextLevel(){
+        this.currentLevel++;
+        this.level = new Level(this.ctx, this.canvas, LEVELS[this.currentLevel]);
     }
 
     async generateLevel(){
