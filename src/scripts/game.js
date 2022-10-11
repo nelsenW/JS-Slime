@@ -9,7 +9,7 @@ const LEVELS = {
                     '#                 #',
                     '#                 #',
                     '#                 #',
-                    '#                 #',
+                    '#         #       #',
                     '#                 e',
                     '###################']
     },
@@ -25,18 +25,26 @@ const LEVELS = {
                     '###################']
     },
     3: {
-        monitorText: 'To move back and forth in the current room use the arrow keys to your advantage...               Idiot.',
+        monitorText: 'To move back and forth in the current room use the arrow keys to your advantage...               Wait until Im done talking jeez...',
         tileArray: ['###################',
                     '#                 #',
                     '#                 #',
                     '#                 #',
                     '#                 e',
-                    '#              #  #',
-                    '#s         #      #',
+                    '#            ###  #',
+                    '#s         # # # ##',
                     '###################']
     },
     4: {
-
+        monitorText: 'Money is tight so if you are dumb enough to fall in a hole we will just get a new test subject...',
+        tileArray: ['###################',
+                    '#                 #',
+                    '#                 #',
+                    '#                 #',
+                    '#                 #',
+                    '#                 #',
+                    '#s                e',
+                    '##########  #######']
     },
     5:{
 

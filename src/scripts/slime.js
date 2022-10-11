@@ -163,6 +163,7 @@ export default class Slime{
     }
 
     isCollidedWith(otherObject){
+        this.exited = false;
         if (this.horizontalCollision(otherObject)){
             if(otherObject instanceof Door)(
                 this.exited = true
@@ -170,11 +171,12 @@ export default class Slime{
             while(this.horizontalCollision(otherObject)){
                 this.pos[0] -= (Math.sign(this.vel[0]) === 0) ? -1 : Math.sign(this.vel[0])
             }
+            this.vel[0] = 0;
         }
 
         if (this.verticalCollision(otherObject)){
             while(this.verticalCollision(otherObject)){
-                if (this.vel[1] === 0) this.vel[1] = 0.98
+                if (this.vel[1] === 0) this.vel[1] = -1
                 this.pos[1] -= (Math.sign(this.vel[1])); 
             }
             this.vel[1] = 0
@@ -207,7 +209,7 @@ export default class Slime{
 
         if(this.pos[1] + this.radius * 1.5 + this.vel[1] >= otherY &&
             this.pos[1] + this.radius  <= otherY2 && 
-            this.pos[0] + this.radius * 2 >= otherX &&
+            this.pos[0] + this.radius * 2 - this.vel[0] >= otherX &&
             this.pos[0] <= otherX2){
             return true 
         }
