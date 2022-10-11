@@ -50,6 +50,7 @@ export default class Game{
         this.allObjects.forEach( obj => {
             obj.animate(this.frame, this.stagger)
         })
+        this.slime.animate(this.frame, this.stagger)
         this.frame++
     }
 
@@ -76,7 +77,7 @@ export default class Game{
 
     async generateLevel(){
         this.level.optionsBreaker(LEVELS[this.currentLevel])
-        this.allObjects = this.allObjects.concat(this.level.objects).concat(this.slime)
+        this.allObjects = this.allObjects.concat(this.level.objects)
         const monitorText = document.querySelector('#monitor-text')
         monitorText.textContent = ''
 

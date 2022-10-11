@@ -141,6 +141,7 @@ div#game-over-menu {
   color: #1589FF;
   font-family: "Share Tech Mono", monospace;
   display: flex;
+  overflow: hidden;
 }
 
 #monitor-text {
