@@ -10,21 +10,50 @@ export default class Level {
     }  
     
     optionsBreaker(optionsHash){
-        let objectsArray = [];
-
-        optionsHash['platforms'].forEach( plat => {
-            objectsArray.push(new Floor(this.ctx, [plat.pos[0] * this.canvas.width, plat.pos[1] * this.canvas.height], plat.width * this.canvas.width, plat.height * this.canvas.height));
-        })
-
-        optionsHash['colorPads'].forEach( pad => {
-            objectsArray.push(new ColorPad(this.ctx, pad.color, [pad.pos[0], pad.pos[1]]));
-        })
-
-        let door = optionsHash['exitDoor']
-        objectsArray.push(new Door(this.ctx, [door.pos[0] * this.canvas.width, door.pos[1] * this.canvas.height], door.width * this.canvas.width, door.height * this.canvas.height));
-
+        this.objects = this.tileMapping(optionsHash['tileArray'])
         this.monitorText = optionsHash['monitorText']
-        this.objects = objectsArray;
+    }
+
+    tileMapping(TileArray){
+        let objectsArray = [];
+        let TileWidth =  this.canvas.width/TileArray[0].length;
+        let TileHeight = this.canvas.height/TileArray.length;
+
+        for(let i = 0; i < TileArray.length; i++){
+            for(let j = 0; j < TileArray[0].length; j++){
+                let x = j * (TileWidth);
+                let y = i * (TileHeight);
+                switch(TileArray[i][j]){
+                    case (' '):
+                        break;
+                    case ('e'):
+                        objectsArray.push(new Door(this.ctx, [x, y], TileWidth, TileHeight));
+                        break;
+                    case ('#'):
+                        objectsArray.push(new Floor(this.ctx, [x,y], TileWidth, TileHeight));
+                        break;
+                    case ('r'):
+                        objectsArray.push(new ColorPad(this.ctx, 'red', [x,y]));
+                        break;
+                    case ('o'):
+                        objectsArray.push(new ColorPad(this.ctx, 'orange', [x,y]));
+                        break;
+                    case ('y'):
+                        objectsArray.push(new ColorPad(this.ctx, 'yellow', [x,y]));
+                        break;
+                    case ('g'):
+                        objectsArray.push(new ColorPad(this.ctx, 'green', [x,y]));
+                        break;
+                    case ('v'):
+                        objectsArray.push(new ColorPad(this.ctx, 'violet', [x,y]));
+                        break;
+                    case ('p'):
+                        objectsArray.push(new ColorPad(this.ctx, 'orange', [x,y]));
+                        break;
+                }
+            }
+        }
+        return objectsArray
     }
 }   
 

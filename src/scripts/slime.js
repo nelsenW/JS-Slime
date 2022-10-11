@@ -202,7 +202,7 @@ export default class Slime{
         if(this.pos[1] + this.radius * 1.5 + this.vel[1] >= otherY &&
             this.pos[1] + this.radius  <= otherY2 && 
             this.pos[0] + this.radius * 2 >= otherX &&
-            this.pos[0] + this.radius * 2 <= otherX2){
+            this.pos[0] <= otherX2){
             return true 
         }
         return false

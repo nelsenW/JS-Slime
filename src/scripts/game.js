@@ -4,9 +4,13 @@ import Level from "./level.js";
 const LEVELS = {
     1: {
         monitorText: 'Welcome to the test lab subject #8X75G2, please proceed to the right to begin testing...',
-        platforms: [{pos: [0, 0.9], width: 1, height: 0.1}, {pos: [0.5, 0.8], width: 0.1, height: 0.1}, {pos: [0.7, 0.8], width: 0.1, height: 0.1}],
-        colorPads: [],
-        exitDoor: {pos: [0.95, 0.85], width: 0.05, height: 0.05}
+        tileArray: ['##',
+                    '##',
+                    '##',
+                    '##',
+                    '##',
+                    '##',
+                    '##']
     },
     2: {
         monitorText: 'For each test all we need to do is make it to the other side of the room...',
