@@ -26,7 +26,6 @@ document.addEventListener("DOMContentLoaded", () =>{
     newGameView.start(); 
     
     retry.addEventListener("click", () =>{
-        console.log("hi")
         gameOverScreen.style.display = 'none';
         gameOverMenu.style.display = 'none';
         newGameView = new GameView(ctx, canvas);

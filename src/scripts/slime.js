@@ -162,21 +162,19 @@ export default class Slime{
     }
 
     isCollidedWith(otherObject){
-        let otherX = otherObject.pos[0];
-        let otherX2 = otherObject.pos[0] + otherObject.width;
-        let otherY = otherObject.pos[1];
-        let otherY2 = otherObject.pos[1] + otherObject.height;
-        if ( //implement better collisions for platforiming
-        )
-        if (
-        this.pos[1] + (this.radius) <= otherY2 + this.terminal_vel && //above bottom boundary
-        this.pos[1] + (this.radius) >= otherY - this.terminal_vel - (this.radius / 2) && // below yop boundary 
-        this.pos[0] + (this.radius) >= otherX && // slime halfway off to left
-        this.pos[0] + this.radius <= otherX2 && 
-        this.vel[1] > 0 //slime halfway off to right
-        ){
+        if (this.horizontalCollision(otherObject)){
+            while(this.horizontalCollision(otherObject)){
+                this.pos[0] -= (Math.sign(this.vel[0]));
+            }
+            this.vel[0] = 0;
+        }
+
+        if (this.verticalCollision(otherObject)){
+            while(this.verticalCollision(otherObject)){
+               this.pos[1] -= (Math.sign(this.vel[1])); 
+            }
+            this.vel[1] = 0
             this.floorColor = null;
-            this.pos[1] = otherY - (this.radius * 1.5);
             if(this.jumpCount < this.jumpCountMax){
                 this.state = 'land';
                 this.jumpCount++;
@@ -190,8 +188,39 @@ export default class Slime{
             if (this.landing && !this.moving){
                 this.state = 'idle'
             }
-        }
+        } 
+        
 
+    }
+
+    verticalCollision(otherObject){
+        let otherX = otherObject.pos[0];
+        let otherX2 = otherObject.pos[0] + otherObject.width;
+        let otherY = otherObject.pos[1];
+        let otherY2 = otherObject.pos[1] + otherObject.height;
+
+        if(this.pos[1] + this.radius * 1.5 + this.vel[1] >= otherY &&
+            this.pos[1] + this.radius  <= otherY2 && 
+            this.pos[0] + this.radius * 2 >= otherX &&
+            this.pos[0] + this.radius * 2 <= otherX2){
+            return true 
+        }
+        return false
+    }
+
+    horizontalCollision(otherObject){
+        let otherX = otherObject.pos[0];
+        let otherX2 = otherObject.pos[0] + otherObject.width;
+        let otherY = otherObject.pos[1];
+        let otherY2 = otherObject.pos[1] + otherObject.height;
+
+        if (this.pos[0] + this.radius * 2 + this.vel[0] >= otherX && 
+            this.pos[0] < otherX2 &&
+            this.pos[1] + this.radius <= otherY &&
+            this.pos[1] >= otherY2){
+            return true
+            }
+        return false
     }
     
 
