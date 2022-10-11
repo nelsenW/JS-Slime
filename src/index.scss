@@ -1,3 +1,8 @@
+html{
+    padding: 0;
+    margin: 0;
+}
+
 body {
     background-color: black;
     font-family: 'Fredoka One';
@@ -98,3 +103,68 @@ fieldset legend{
     position: absolute;
     left: 85%;
 }
+
+.game-over-screen{
+    width: 100%;
+    height: 100%;
+    display: none;
+    background-color: slategray;
+    position: fixed;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.7;
+}
+
+div#game-over-menu{
+    background: radial-gradient(slategray, slateblue);
+    width: 200px;
+    height: 200px;
+    display: none;   
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    border-radius: 10%;
+    z-index: 1;
+}
+
+
+.monitor{
+    width: 400px;
+    height: 200px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border: 10px outset grey;
+    background-color: black;
+    color: #1589FF;
+    font-family: 'Share Tech Mono', monospace; 
+    display: flex;
+}
+
+#monitor-text{
+    margin: 10px 0px 10px 10px;
+    display: inline-block;
+    letter-spacing: .15em; 
+}
+
+#cursor {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    width: 2px;
+    height: 10px;
+    border: .15em solid #1589FF; 
+    background-color: #1589FF;
+    animation: blink .5s linear infinite alternate;
+}
+
+@keyframes blink{
+    0% {opacity: 1;}
+    40% {opacity: 1;}
+    60% {opacity: 0;}
+    100% {opacity: 0;}
+}
+
+  

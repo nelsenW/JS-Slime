@@ -1,6 +1,5 @@
 import Slime from "./slime.js";
 import Level from "./level.js";
-import {ColorPad} from "./color_pads.js";
 
 export default class Game{
     constructor(ctx, canvas){
@@ -38,8 +37,29 @@ export default class Game{
         
     }
 
-    generateLevel(){
+    checkGameStatus(){
+        if (this.slime.pos[1] > this.canvas.height){
+            return true
+        } 
+        if (this.slime.health <= 0){
+            return true 
+        }
+        return false
+    }
+
+    async generateLevel(){
         this.allObjects = this.allObjects.concat(this.level.objects).concat(this.slime)
+        const monitorText = document.querySelector('#monitor-text')
+
+        let textArr = this.level.monitorText()
+
+        for(let i = 0; i < textArr.length; i++){
+            await this.typeSpeed(200);
+            monitorText.textContent += textArr[i];
+        }
+    }
+    typeSpeed = (ms) => {
+        return new Promise(resolve => setTimeout(resolve, ms))
     }
 
 } 

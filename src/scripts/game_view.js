@@ -7,6 +7,8 @@ export default class GameView {
         this.game = new Game(this.ctx, this.canvas);
         this.paused = false;
         this.pauseMenu = document.getElementById("pause-menu");
+        this.gameOverScreen = document.querySelector('.game-over-screen')
+        this.gameOverMenu = document.querySelector('#game-over-menu')
         this.pauseMenu.addEventListener('click', this.pauseCallback.bind(this));
     }
 
@@ -15,7 +17,12 @@ export default class GameView {
     }
 
     gameLoop() {
-        if(this.paused) return;
+        if(this.paused) return; 
+        if(this.game.checkGameStatus()){
+            this.gameOverScreen.style.display = 'flex';
+            this.gameOverMenu.style.display = 'flex';
+            return;
+        }
         this.game.step();
         this.game.draw(this.ctx, this.canvas);
         window.requestAnimationFrame(this.gameLoop.bind(this))
@@ -69,8 +76,7 @@ export default class GameView {
                     if(this.game.slime.dashCount >= this.game.slime.dashCountMax && this.game.slime.color === 'yellow'){
                         this.game.frame = 0;
                         this.game.slime.move("dash");
-                    }
-                   
+                    }      
                     break;
                 case "KeyF":
                       let floorColor = this.game.slime.floorColor
@@ -101,7 +107,6 @@ export default class GameView {
                             break;
                       }
                       }
-                      
                     break;
                 case "KeyP":
                     this.pause();

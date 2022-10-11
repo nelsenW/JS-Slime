@@ -23,7 +23,7 @@ export default class Slime{
         this.canvas = canvas;
         this.ctx = ctx;
         this.gravity = 0;
-        this.terminal_vel = 35;
+        this.terminal_vel = 12;
         this.grav_dir = 1;
         this.jumpCount = 0;
         this.jumpCountMax = 1;
@@ -70,7 +70,7 @@ export default class Slime{
         }
     }
 
-    updatepos(){ //calling checkcollisions before calling updatepos 
+    updatepos(){ 
         this.pos[0] += this.vel[0];
         if (this.vel[1] < this.terminal_vel){
             this.vel[1] += this.gravity
@@ -87,7 +87,7 @@ export default class Slime{
                         this.vel[1] -= 20;
                     } else {
                         this.vel[1] = this.terminal_vel;  
-                        this.vel[1] -= 60; 
+                        this.vel[1] -= 30; 
                     }
                     this.jumpCount--;
                     this.landing = false;
@@ -167,13 +167,14 @@ export default class Slime{
         let otherY = otherObject.pos[1];
         let otherY2 = otherObject.pos[1] + otherObject.height;
         if (
-        this.pos[1] + (2 * this.radius) <= otherY2 + (this.terminal_vel * 2) && //above bottom boundary
-        this.pos[1] + (2 * this.radius) >= otherY - this.terminal_vel && // below yop boundary 
+        this.pos[1] + (this.radius) <= otherY2 + this.terminal_vel && //above bottom boundary
+        this.pos[1] + (this.radius) >= otherY - this.terminal_vel - (this.radius / 2) && // below yop boundary 
         this.pos[0] + (this.radius) >= otherX && // slime halfway off to left
         this.pos[0] + this.radius <= otherX2 && 
         this.vel[1] > 0 //slime halfway off to right
         ){
-            this.pos[1] = otherY - (this.radius);
+            this.floorColor = null;
+            this.pos[1] = otherY - (this.radius * 1.5);
             if(this.jumpCount < this.jumpCountMax){
                 this.state = 'land';
                 this.jumpCount++;
@@ -182,7 +183,7 @@ export default class Slime{
                 this.dashCount++;
             }
             if(otherObject instanceof ColorPad){
-                this.floorColor = otherObject.color
+                this.floorColor = otherObject.color;
             }
             if (this.landing && !this.moving){
                 this.state = 'idle'
