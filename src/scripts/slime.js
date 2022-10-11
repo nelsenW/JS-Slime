@@ -1,4 +1,5 @@
 import {ColorPad, COLORS} from "./color_pads"
+import { Door } from "./level";
 
 const ANIMATIONS = {
     'rangedAttack': 14,
@@ -163,12 +164,12 @@ export default class Slime{
 
     isCollidedWith(otherObject){
         if (this.horizontalCollision(otherObject)){
-            while(this.horizontalCollision(otherObject)){
-                this.pos[0] -= (Math.sign(this.vel[0]))
-            }
             if(otherObject instanceof Door)(
                 this.exited = true
             )
+            while(this.horizontalCollision(otherObject)){
+                this.pos[0] -= (Math.sign(this.vel[0]) === 0) ? -1 : Math.sign(this.vel[0])
+            }
         }
 
         if (this.verticalCollision(otherObject)){

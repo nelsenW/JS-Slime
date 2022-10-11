@@ -1,17 +1,18 @@
 import { ColorPad } from "./color_pads";
 
 
-export default class Level {
-    constructor(ctx, canvas){
+export class Level {
+    constructor(ctx, canvas, optionsHash, slime){
         this.ctx = ctx;
         this.canvas = canvas;
-        this.objects = [];
-        this.monitorText = ''
+        this.monitorText = '';
+        this.slime = slime;
+        this.objects = this.optionsBreaker(optionsHash);
     }  
     
     optionsBreaker(optionsHash){
-        this.objects = this.tileMapping(optionsHash['tileArray'])
         this.monitorText = optionsHash['monitorText']
+        return this.tileMapping(optionsHash['tileArray'])
     }
 
     tileMapping(TileArray){
@@ -50,6 +51,10 @@ export default class Level {
                     case ('p'):
                         objectsArray.push(new ColorPad(this.ctx, 'orange', [x,y]));
                         break;
+                    case ('s'):
+                        this.slime.vel = [0,0];
+                        this.slime.pos = [x,y];
+                        break;
                 }
             }
         }
@@ -72,7 +77,7 @@ class Floor{
     }
 }
 
-class Door{
+export class Door{
     constructor(ctx, position, width, height){
         this.ctx = ctx;
         this.pos =  position;

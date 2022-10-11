@@ -1,27 +1,39 @@
 import Slime from "./slime.js";
-import Level from "./level.js";
+import {Level} from "./level.js";
 
 const LEVELS = {
     1: {
         monitorText: 'Welcome to the test lab subject #8X75G2, please proceed to the right to begin testing...',
-        tileArray: ['#################',
-                    '#               #',
-                    '#               #',
-                    '#               #',
-                    '#               #',
-                    '#               #',
-                    '#################']
+        tileArray: ['###################',
+                    '#                 #',
+                    '#                 #',
+                    '#                 #',
+                    '#                 #',
+                    '#                 #',
+                    '#                 e',
+                    '###################']
     },
     2: {
         monitorText: 'For each test all we need to do is make it to the other side of the room...',
-        platforms: [{pos: [0, 0.9], width: 1, height: 0.1}],
-        colorPads: [],
-        exitDoor: {pos: [0.95, 0.85], width: 0.05, height: 0.05}
+        tileArray: ['###################',
+                    '#                 #',
+                    '#                 #',
+                    '#                 #',
+                    '#                 #',
+                    '#                 #',
+                    '#s       #        e',
+                    '###################']
     },
     3: {
         monitorText: 'To move back and forth in the current room use the arrow keys to your advantage...               Idiot.',
-        platforms: [{pos: [], width: 0, height: 0}],
-        colorPads: []
+        tileArray: ['###################',
+                    '#                 #',
+                    '#                 #',
+                    '#                 #',
+                    '#                 e',
+                    '#              #  #',
+                    '#s         #      #',
+                    '###################']
     },
     4: {
 
@@ -37,10 +49,11 @@ export default class Game{
         this.canvas = canvas;
         this.slime = new Slime([this.canvas.width * 0.54 , this.canvas.height * 0.42],this, this.ctx, this.canvas);
         this.currentLevel = 1;
-        this.level = new Level(this.ctx, this.canvas, LEVELS[this.currentLevel]);
+        this.level = new Level(this.ctx, this.canvas, LEVELS[this.currentLevel], this.slime);
         this.frame = 0;
         this.stagger = 5;
-        this.allObjects = [];
+        this.allObjects = this.level.objects;
+        this.tutorialFinished = false
         this.generateLevel();
     }
 
@@ -65,7 +78,7 @@ export default class Game{
     checkCollisions(){
         for(let i = 0; i < this.allObjects.length; i++){
             this.slime.isCollidedWith(this.allObjects[i])
-            if(this.slime.exited){
+            if(this.slime.exited && this.tutorialFinished === true){
                 this.nextLevel()
             }
         }
@@ -83,13 +96,15 @@ export default class Game{
     }
 
     nextLevel(){
+        this.slime.exited = false
         this.currentLevel++;
-        this.level = new Level(this.ctx, this.canvas, LEVELS[this.currentLevel]);
+        this.level = new Level(this.ctx, this.canvas, LEVELS[this.currentLevel], this.slime);
+        this.allObjects = this.level.objects;
+        this.tutorialFinished = false
+        this.generateLevel();
     }
 
     async generateLevel(){
-        this.level.optionsBreaker(LEVELS[this.currentLevel])
-        this.allObjects = this.allObjects.concat(this.level.objects)
         const monitorText = document.querySelector('#monitor-text')
         monitorText.textContent = ''
 
@@ -99,6 +114,7 @@ export default class Game{
             await this.typeSpeed(50);
             monitorText.textContent += textArr[i];
         }
+        this.tutorialFinished = true
     }
     typeSpeed = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms))
