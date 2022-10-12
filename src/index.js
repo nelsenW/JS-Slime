@@ -1,5 +1,5 @@
 import { Blob } from "./scripts/home_animation";
-import {LEVELS} from "./scripts/game.js";
+import {LEVELS, Game} from "./scripts/game.js";
 import GameView from "./scripts/game_view.js"
 import { Level } from "./scripts/level.js";
 import Slime from './scripts/slime.js'
@@ -79,18 +79,11 @@ document.addEventListener("DOMContentLoaded", () =>{
 
 
 /// chunk
-
-    const gradient =  ctx.createRadialGradient(75, 50, 5, 90, 60, 100);
-    gradient.addColorStop(0,"#a4c0f4");
-    gradient.addColorStop(0.5,'#3674e7');
-    gradient.addColorStop(1,'#113e92');
-    ctx.fillStyle = gradient;
     let slimeLoopCancelled = false
-
     let blobArray = []
     let i = 5
     let slimeHomeColors = setInterval(() => {
-        slime1.color = slimeColors[i % 7]
+        slime1.color = slimeColors[i % 7];
         i++ 
     }, 500);
 
@@ -99,9 +92,9 @@ document.addEventListener("DOMContentLoaded", () =>{
             blobArray.push(new Blob(canvas))
         }
     }
-    collect(20);
+    collect(30);
 
-    let slime1 = new Slime([0, 0], null, ctx2, canvas2)
+    let slime1 = new Slime([0, 0], undefined, ctx2, canvas2)
     let frame = 0
 
     const slimeLoop = () => {
