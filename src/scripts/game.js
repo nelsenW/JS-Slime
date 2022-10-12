@@ -15,7 +15,7 @@ export class Game{
         this.scoreFrame = document.querySelector('.score')
         this.healthFrame = document.querySelector('.health')
         this.scoreText = document.getElementById('score')
-        this.healthText = document.getElementById('health')
+        this.healthBar = document.getElementById('health')
         this.deathFrame = document.querySelector('.deaths')
         this.deathText = document.getElementById('deaths')
         this.deaths = 0;
@@ -37,13 +37,13 @@ export class Game{
             obj.animate(this.frame, this.stagger)
         })
         this.slime.animate(this.frame, this.stagger)
-        if(this.currentLevel >= 1){
+        if(this.currentLevel >= 9){
             this.scoreFrame.style.display = 'inline';
             this.healthFrame.style.display = 'inline-block';
             this.deathFrame.style.display = 'inline';
             this.deathText.textContent = this.deaths;
             this.scoreText.textContent = this.score;
-            this.healthText.textContent = this.slime.health
+            this.healthBar.value = this.slime.health;
         }
         this.frame++
     }
