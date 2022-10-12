@@ -1,4 +1,4 @@
-import Game from "./game.js"
+import {Game} from "./game.js"
 
 export default class GameView {
     constructor(ctx, canvas){
@@ -8,7 +8,8 @@ export default class GameView {
         this.paused = false;
         this.pauseMenu = document.getElementById("pause-menu");
         this.gameOverScreen = document.querySelector('.game-over-screen')
-        this.gameOverMenu = document.querySelector('#game-over-menu')
+        this.gameOverMenu = document.querySelector('#game-over-menu');
+        this.finalScore = document.getElementById('final-score')
         this.pauseMenu.addEventListener('click', this.pauseCallback.bind(this));
     }
 
@@ -21,6 +22,7 @@ export default class GameView {
         if(this.game.checkGameStatus()){
             this.gameOverScreen.style.display = 'flex';
             this.gameOverMenu.style.display = 'flex';
+            this.finalScore.textContent = this.game.score;
             return;
         }
         this.game.step();

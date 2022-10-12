@@ -142,6 +142,26 @@ div#game-over-menu{
     font-family: 'Share Tech Mono', monospace; 
     display: flex;
     overflow: hidden;
+    flex-direction: column;
+}
+
+.monitor p{
+    margin: 0;
+}
+
+p.score{
+    margin-left: 10px;
+    display: none;
+}
+
+p.health{
+    margin-left: 10px;
+    display: none;
+}
+
+p.deaths{
+    margin-left: 10px;
+    display: none;
 }
 
 #monitor-text{

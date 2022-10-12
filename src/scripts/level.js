@@ -4,6 +4,7 @@ import { ColorPad } from "./color_pads";
 export class Level {
     constructor(ctx, canvas, optionsHash, slime){
         this.ctx = ctx;
+        this.score = 1000
         this.canvas = canvas;
         this.monitorText = '';
         this.slime = slime;
@@ -24,6 +25,7 @@ export class Level {
             for(let j = 0; j < TileArray[0].length; j++){
                 let x = j * (TileWidth);
                 let y = i * (TileHeight);
+
                 switch(TileArray[i][j]){
                     case (' '):
                         break;
@@ -34,22 +36,22 @@ export class Level {
                         objectsArray.push(new Floor(this.ctx, [x,y], TileWidth, TileHeight));
                         break;
                     case ('r'):
-                        objectsArray.push(new ColorPad(this.ctx, 'red', [x,y]));
+                        objectsArray.push(new ColorPad(this.ctx, 'red', [x,y], TileWidth, TileHeight));
                         break;
                     case ('o'):
-                        objectsArray.push(new ColorPad(this.ctx, 'orange', [x,y]));
+                        objectsArray.push(new ColorPad(this.ctx, 'orange', [x,y], TileWidth, TileHeight ));
                         break;
                     case ('y'):
-                        objectsArray.push(new ColorPad(this.ctx, 'yellow', [x,y]));
+                        objectsArray.push(new ColorPad(this.ctx, 'yellow', [x,y], TileWidth, TileHeight ));
                         break;
                     case ('g'):
-                        objectsArray.push(new ColorPad(this.ctx, 'green', [x,y]));
+                        objectsArray.push(new ColorPad(this.ctx, 'green', [x,y], TileWidth, TileHeight ));
                         break;
                     case ('v'):
-                        objectsArray.push(new ColorPad(this.ctx, 'violet', [x,y]));
+                        objectsArray.push(new ColorPad(this.ctx, 'violet', [x,y], TileWidth, TileHeight ));
                         break;
                     case ('p'):
-                        objectsArray.push(new ColorPad(this.ctx, 'orange', [x,y]));
+                        objectsArray.push(new ColorPad(this.ctx, 'pink', [x,y], TileWidth, TileHeight ));
                         break;
                     case ('s'):
                         this.slime.vel = [0,0];

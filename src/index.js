@@ -1,5 +1,6 @@
-import Game from "./scripts/game.js";
+import {LEVELS} from "./scripts/game.js";
 import GameView from "./scripts/game_view.js"
+import { Level } from "./scripts/level.js";
 
 
 document.addEventListener("DOMContentLoaded", () =>{
@@ -23,12 +24,14 @@ document.addEventListener("DOMContentLoaded", () =>{
     canvas.width = window.innerWidth;
 
     let newGameView = new GameView(ctx, canvas);
-    newGameView.start(); 
+        newGameView.start(); 
     
     retry.addEventListener("click", () =>{
         gameOverScreen.style.display = 'none';
         gameOverMenu.style.display = 'none';
-        newGameView = new GameView(ctx, canvas);
+        newGameView.game.deaths++
+        newGameView.game.score -= 1000;
+        newGameView.game.level = new Level(ctx, canvas, LEVELS[newGameView.game.currentLevel], newGameView.game.slime)
         newGameView.start();
         startFunc();
     })

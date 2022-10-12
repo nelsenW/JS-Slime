@@ -56,20 +56,20 @@ export const COLORS = {
 };
 
 export class ColorPad {
-	constructor(ctx, color, pos) {
+	constructor(ctx, color, pos, width, height) {
 		this.ctx = ctx;
 		this.pos = pos;
 		this.color = color;
 		this.baseShade = COLORS[color]['baseShade'];
-		this.width = 64;
-		this.height = 22;
+		this.width = width;
+		this.height = height;
 	}
 
 	animate() {
         const padSheet = document.querySelector("#pad-sheet")
         let position = Object.keys(COLORS).indexOf(this.color)
-        let x = 64 * position
-        this.ctx.drawImage(padSheet, x, 0, this.width, this.height, this.pos[0], this.pos[1], this.width, this.height);  
+        let x = 256 * position
+        this.ctx.drawImage(padSheet, x, 0, 256, 256, this.pos[0], this.pos[1], this.width, this.height);  
     }
 }
 
