@@ -1,5 +1,5 @@
 import { Blob } from "./scripts/home_animation";
-import {LEVELS, Game} from "./scripts/game.js";
+import {LEVELS} from "./scripts/levelsList";
 import GameView from "./scripts/game_view.js"
 import { Level } from "./scripts/level.js";
 import Slime from './scripts/slime.js'
