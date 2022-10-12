@@ -1,26 +1,14 @@
 export const LEVELS = {
     1: {
         monitorText: 'Welcome to the test lab subject #8X75G2, please proceed to the right to begin testing...',
-        tileArray: ['##########################',
-        '#####                    #',
-        '#                        #',
-        '#                        #',
-        '#          ^^^^          #',
-        '#y#                      #',
-        '#        ^               #',
-        '#        ^               #',
-        '#        ^               #',
-        '#        ^               #',
-        '#      ##^               #',
-        '#        ^               #',
-        '#  ##    ^               #',
-        '#        ^               #',
-        '#      ##^               #',
-        '#        ^               #',
-        '######   ^               #',
-        '#    ##^ ^               #',
-        '#  s     ^               #',
-        '#^#py#####          ##g#e#']
+        tileArray: ['#####################',
+        '#####               #',
+        '#                   #',
+        '#                   #',
+        '#          s        #',
+        '#          #        #',
+        '#                   e',
+        '#####################']
     },
     2: {
         monitorText: 'For each test all we need to do is make it to the other side of the room...',
@@ -58,12 +46,12 @@ export const LEVELS = {
     5:{
         monitorText: 'Focus on a pad by pressing F and you should be able to change colors.',
         tileArray: ['#####################',
-                    '#####               #',
+                    '#####               e',
                     '#                   #',
                     '#                   #',
                     '#                   #',
                     '#                   #',
-                    '#s                  e',
+                    '#s                  #',
                     '######r##############']
     },
     6:{
@@ -210,7 +198,7 @@ export const LEVELS = {
         '######   ^               #',
         '#    ##^ ^               #',
         '#  s     ^               #',
-        '###py#####          ##g#e#']
+        '###p######          ##g#e#']
 
     }
 }

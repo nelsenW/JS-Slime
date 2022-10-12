@@ -95,7 +95,9 @@ export default class Slime {
 
 	updatepos() {
 		this.pos[0] += this.vel[0];
-		if (this.vel[1] < this.terminal_vel) {
+		if (this.grav_dir === -1 && this.vel[1] > -this.terminal_vel){
+			this.vel[1] -= this.gravity;
+		} else if (this.grav_dir === 1 && this.vel[1] < this.terminal_vel) {
 			this.vel[1] += this.gravity;
 		}
 		this.pos[1] += this.vel[1];
@@ -107,10 +109,10 @@ export default class Slime {
 				if (this.jumpCount > 0) {
 					this.state = 'jump';
 					if (this.color === 'pink' && this.jumpCount === 1) {
-						this.vel[1] -= 20;
-					} else {
-						this.vel[1] = this.terminal_vel;
-						this.vel[1] -= 30;
+						this.vel[1] -= Math.sign(this.grav_dir) * 20;
+ 					} else {
+						this.vel[1] = this.terminal_vel * Math.sign(this.grav_dir);
+						this.vel[1] -= Math.sign(this.grav_dir) * 30;
 					}
 					this.jumpCount--;
 					this.landing = false;
@@ -198,7 +200,7 @@ export default class Slime {
 		}
 
 		if (this.verticalCollision(otherObject)) {
-            if (this.jumpCount < this.jumpCountMax && this.vel[1] >= 0) {
+            if (this.jumpCount < this.jumpCountMax &&  Math.abs(this.vel[1]) >= 0) {
 				this.state = 'land';
 				this.jumpCount++;
 			}
@@ -280,7 +282,8 @@ export default class Slime {
 		this.ignoreCollision = false;
 		this.dashCount = 0;
 		this.dashCountMax = 0;
-		this.damage /= this.redDmgMod;
 		this.gravity = 0.98;
+		this.grav_dir = 1;
+		this.vel[1] = Math.abs(this.vel[1]);
 	}
 }

@@ -89,7 +89,8 @@ export default class GameView {
 					if (this.game.slime.color === 'blue') {
 						switch (floorColor) {
 							case 'red':
-								this.game.slime.damage *= this.game.slime.redDmgMod;
+                                this.game.slime.vel[1] *= -1 
+								this.game.slime.grav_dir = -1;
 								this.game.slime.color = 'red';
 								break;
 							case 'orange':

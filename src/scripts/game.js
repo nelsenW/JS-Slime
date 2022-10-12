@@ -79,7 +79,7 @@ export class Game{
         this.level = new Level(this.ctx, this.canvas, LEVELS[this.currentLevel], this.slime);
         this.allObjects = this.level.objects;
         this.monitor.style.size = '' /// variable monitor size based on tile size
-        this.slime.color = 'blue';
+        this.slime.resetStats();
         this.slime.roomHealth = this.slime.health;
         this.tutorialFinished = false
         this.generateLevel();
