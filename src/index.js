@@ -5,6 +5,7 @@ import { Level } from "./scripts/level.js";
 import Slime from './scripts/slime.js'
 
 document.addEventListener("DOMContentLoaded", () =>{
+    const body = document.querySelector('body')
     const startGame = document.getElementById("startgame");
     const startMenu = document.querySelector(".start-menu");
     const closeButton = document.getElementById("close-button");
@@ -51,6 +52,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         monitor.style.display = 'flex';
         canvas.style.filter = 'none';
         canvas.style.backgroundColor = 'aliceblue';
+        body.requestFullscreen();
         window.cancelAnimationFrame(slimeLoop);
         slimeLoopCancelled = true;
         clearInterval(slimeHomeColors);
