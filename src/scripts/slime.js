@@ -265,14 +265,19 @@ export default class Slime {
 		this.state = 'hurt';
 		this.iFrames = true;
 		this.health -= damage;
-		this.radius = this.health / 2
-		if (this.health < 32){
-			this.radius = 17
-		}
+		this.radiusCheck()
 		setTimeout(() => {
 			this.iFrames = false;
 			this.state = 'idle'
 		},1000)
+	}
+
+
+	radiusCheck(){
+		this.radius = this.health / 2
+		if (this.health < 32){
+			this.radius = 17
+		}
 	}
 
 	resetStats() {

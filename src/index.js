@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () =>{
         newGameView.game.score -= 1000; 
         newGameView.game.slime.health = newGameView.game.slime.roomHealth;
         newGameView.game.level = new Level(ctx, canvas, LEVELS[newGameView.game.currentLevel], newGameView.game.slime)
-        newGameView.game.slime.radius = newGameView.game.slime.health / 2
+        newGameView.game.slime.radius = newGameView.game.slime.radiusCheck()
         newGameView.start(); 
         startFunc();
     });
