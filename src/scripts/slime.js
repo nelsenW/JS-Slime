@@ -272,7 +272,6 @@ export default class Slime {
 		},1000)
 	}
 
-
 	radiusCheck(){
 		this.radius = this.health / 2
 		if (this.health < 32){
