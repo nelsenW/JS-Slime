@@ -31,7 +31,7 @@ body {
 
 #canvas2 {
     background-color: transparent;
-    display: block;
+    display: flex;
     position: absolute;
     top: -5%;
     left: 72%;
@@ -153,11 +153,9 @@ div#game-over-menu{
 
 
 .monitor{
-    width: 400px;
-    height: 200px;
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 10px;
+    left: 10px;
     border: 10px outset grey;
     background-color: black;
     color: #1589FF;

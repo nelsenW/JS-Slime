@@ -2,7 +2,7 @@ export const LEVELS = {
     1: {
         monitorText: 'Welcome to the test lab subject #8X75G2, please proceed to the right to begin testing...',
         tileArray: ['#####################',
-        '#####               #',
+        '#                   #',
         '#                   #',
         '#                   #',
         '#          s        #',
@@ -13,7 +13,7 @@ export const LEVELS = {
     2: {
         monitorText: 'For each test all we need to do is make it to the other side of the room...',
         tileArray: ['#####################',
-                    '#####               #',
+                    '#                   #',
                     '#                   #',
                     '#                   #',
                     '#            #      #',
@@ -24,7 +24,7 @@ export const LEVELS = {
     3: {
         monitorText: 'To move back and forth in the current room use the arrow keys to your advantage...               Wait until Im done talking jeez...',
         tileArray: ['#####################',
-                    '#####               #',
+                    '#                   #',
                     '#                   #',
                     '#                   #',
                     '#                   e',
@@ -35,7 +35,7 @@ export const LEVELS = {
     4: {
         monitorText: 'Money is tight so if you are dumb enough to fall in a hole we will just get a new test subject...',
         tileArray: ['#####################',
-                    '#####               #',
+                    '#                   #',
                     '#                   #',
                     '#                   #',
                     '#                   #',
@@ -46,7 +46,7 @@ export const LEVELS = {
     5:{
         monitorText: 'Focus on a pad by pressing F and you should be able to change colors.',
         tileArray: ['#####################',
-                    '#####               e',
+                    '#                   e',
                     '#                   #',
                     '#                   #',
                     '#                   #',
@@ -57,7 +57,7 @@ export const LEVELS = {
     6:{
         monitorText: 'Thats a big hole... hot damn. Being pink gives you a double jump btw...',
         tileArray: ['#####################',
-                    '#####               #',
+                    '#                   #',
                     '#                   #',
                     '#                   #',
                     '#                   #',
@@ -68,7 +68,7 @@ export const LEVELS = {
     7:{
         monitorText: 'yellow on the other hand gives you the ability to dash with the D button',
         tileArray: ['#####################',
-                    '#####    #    #     #',
+                    '#        #    #     #',
                     '#        #    #     #',
                     '#        #    #     #',
                     '#        #    #     #',
@@ -79,7 +79,7 @@ export const LEVELS = {
     8:{
         monitorText: 'Press space to turn blue so you can reabsorb another color',
         tileArray: ['#####################',
-                    '#####     #####     #',
+                    '#         #####     #',
                     '#                   #',
                     '#              #    #',
                     '#        y     #    #',
@@ -90,7 +90,7 @@ export const LEVELS = {
     9:{
         monitorText: 'Now this is testing so we have been scoring you and tracking your vitals... Here they are.',
         tileArray: ['#####################',
-                    '#####               #',
+                    '#                   #',
                     '#         #         e',
                     '#      #  #  #      #',
                     '#   #     #        ##',
@@ -101,7 +101,7 @@ export const LEVELS = {
     10:{
         monitorText: 'This is extremely important!!! Those pointy things will rip chunks off of you. If you get small enough you will die.',
         tileArray: ['#####################',
-                    '#####               #',
+                    '#                   #',
                     '#                   #',
                     '#                   #',
                     '#                   #',
@@ -112,7 +112,7 @@ export const LEVELS = {
     11:{
         monitorText: 'Good luck not getting hurt lmao...',
         tileArray: ['#####################',
-                    '#####               #',
+                    '#                   #',
                     '#                   #',
                     '#                   #',
                     '#                   #',
@@ -123,7 +123,7 @@ export const LEVELS = {
     12:{
         monitorText: 'Green pads are a one time use but will restore you a bit of health',
         tileArray: ['#####################',
-                    '#####               #',
+                    '#                   #',
                     '#                   #',
                     '#                   #',
                     '#                   #',
@@ -134,7 +134,7 @@ export const LEVELS = {
     13:{
         monitorText: 'Sometimes dying a little bit can help ya out...',
         tileArray: ['##########################',
-                    '#####                    #',
+                    '#                        #',
                     '#                        #',
                     '#                        #',
                     '#                        #',
@@ -157,7 +157,7 @@ export const LEVELS = {
     14:{
         monitorText: 'Only gets harder from here...',
         tileArray: ['##########################',
-        '#####                    #',
+        '#                        #',
         '#                        #',
         '#                        #',
         '#                        #',
@@ -180,7 +180,7 @@ export const LEVELS = {
     15:{
         monitorText: 'Gonna leave you alone for a bit now... Good luck...',
         tileArray: ['##########################',
-        '#####                    #',
+        '#                        #',
         '#                        #',
         '#                        #',
         '#          ^^^^          #',
@@ -205,10 +205,10 @@ export const LEVELS = {
 
 
 tileArray: ['#####################',
-                    '#####               #',
-                    '#                   #',
-                    '#                   #',
-                    '#          s        #',
-                    '#          #        #',
-                    '#                   e',
-                    '#####################']
+            '#                   #',
+            '#                   #',
+            '#                   #',
+            '#          s        #',
+            '#          #        #',
+            '#                   e',
+            '#####################']

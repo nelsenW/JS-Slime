@@ -37,13 +37,13 @@ export class Game{
             obj.animate(this.frame, this.stagger)
         })
         this.slime.animate(this.frame, this.stagger)
-        if(this.currentLevel >= 9){
+        if(this.currentLevel >= 1){
             this.scoreFrame.style.display = 'inline';
-            this.healthFrame.style.display = 'inline';
+            this.healthFrame.style.display = 'inline-block';
             this.deathFrame.style.display = 'inline';
             this.deathText.textContent = this.deaths;
             this.scoreText.textContent = this.score;
-            this.healthText.textContent = this.slime.health;
+            this.healthText.textContent = this.slime.health
         }
         this.frame++
     }
@@ -78,7 +78,6 @@ export class Game{
         this.currentLevel++;
         this.level = new Level(this.ctx, this.canvas, LEVELS[this.currentLevel], this.slime);
         this.allObjects = this.level.objects;
-        this.monitor.style.size = '' /// variable monitor size based on tile size
         this.slime.resetStats();
         this.slime.roomHealth = this.slime.health;
         this.tutorialFinished = false
