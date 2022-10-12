@@ -11,7 +11,7 @@ export const LEVELS = {
                     '#          s        #',
                     '#          #        #',
                     '#                   e',
-                    '##^##################']
+                    '##^####g#############']
     },
     2: {
         monitorText: 'For each test all we need to do is make it to the other side of the room...',
@@ -101,6 +101,39 @@ export const LEVELS = {
                     '#s#     #           #',
                     '#####################']
     },
+    10:{
+        monitorText: 'This is extremely important!!! Those pointy things will rip chunks off of you. If you get small enough you will die.',
+        tileArray: ['#####################',
+                    '#####               #',
+                    '#                   #',
+                    '#                   #',
+                    '#                   #',
+                    '#                   #',
+                    '#s#                 #',
+                    '#######^^^#########e#']
+    },
+    11:{
+        monitorText: 'Good luck not getting hurt lmao...',
+        tileArray: ['#####################',
+                    '#####               #',
+                    '#                   #',
+                    '#                   #',
+                    '#                   #',
+                    '#                   #',
+                    '#s#         ^       #',
+                    '#######^^^^#^^#####e#']
+    },
+    12:{
+        monitorText: 'Green pads are a one time use but will restore you a bit of health',
+        tileArray: ['#####################',
+                    '#####               #',
+                    '#                   #',
+                    '#                   #',
+                    '#                   #',
+                    '#                   #',
+                    '#s                  #',
+                    '#######g###########e#']
+    }
 }
 
 export class Game{

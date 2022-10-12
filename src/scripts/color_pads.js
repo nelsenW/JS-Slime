@@ -53,6 +53,7 @@ export const COLORS = {
 		darkShade: [255, 31, 109],
 		darkerShade: [204, 0, 71],
 	},
+	clear: {}
 };
 
 export class ColorPad {
@@ -63,6 +64,7 @@ export class ColorPad {
 		this.baseShade = COLORS[color]['baseShade'];
 		this.width = width;
 		this.height = height;
+		this.used = false;
 	}
 
 	animate() {

@@ -50,6 +50,7 @@ document.addEventListener("DOMContentLoaded", () =>{
     startGame.addEventListener("click", () => {
         monitor.style.display = 'flex';
         canvas.style.filter = 'none';
+        canvas.style.backgroundColor = 'aliceblue';
         window.cancelAnimationFrame(slimeLoop);
         slimeLoopCancelled = true;
         clearInterval(slimeHomeColors);

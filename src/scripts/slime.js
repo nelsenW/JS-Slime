@@ -34,7 +34,7 @@ export default class Slime {
 		this.roomHealth = this.health;
 		this.radius = this.health / 2;
 		this.iFrames = false;
-		this.healthRegen = false;
+		this.maxHealth = 64;
 		this.damage = 10;
 		this.redDmgMod = 2;
 		this.ignoreCollision = false;
@@ -213,7 +213,7 @@ export default class Slime {
 			this.floorColor = null;
 			
 			if (otherObject instanceof ColorPad) {
-				this.floorColor = otherObject.color;
+				this.floorColor = otherObject;
 			}
 			if (this.landing && !this.moving && !this.iFrames) {
 				this.state = 'idle';
@@ -264,7 +264,6 @@ export default class Slime {
 		this.iFrames = true;
 		this.health -= damage;
 		this.radius = this.health / 2
-		debugger 
 		if (this.health < 32){
 			this.radius = 17
 		}
@@ -281,7 +280,6 @@ export default class Slime {
 		this.ignoreCollision = false;
 		this.dashCount = 0;
 		this.dashCountMax = 0;
-		this.healthRegen = false;
 		this.damage /= this.redDmgMod;
 		this.gravity = 0.98;
 	}
