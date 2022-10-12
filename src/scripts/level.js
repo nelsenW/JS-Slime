@@ -1,5 +1,5 @@
 import { ColorPad } from "./color_pads";
-
+import Spike from "./spike";
 
 export class Level {
     constructor(ctx, canvas, optionsHash, slime){
@@ -52,6 +52,9 @@ export class Level {
                         break;
                     case ('p'):
                         objectsArray.push(new ColorPad(this.ctx, 'pink', [x,y], TileWidth, TileHeight ));
+                        break;
+                    case ('^'):
+                        objectsArray.push(new Spike(this.ctx, [x,y], TileWidth, TileHeight));
                         break;
                     case ('s'):
                         this.slime.vel = [0,0];

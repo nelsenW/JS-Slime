@@ -1,12 +1,13 @@
 import { ColorPad, COLORS } from './color_pads';
 import { Door } from './level';
+import Spike from './spike';
 
 const ANIMATIONS = {
 	rangedAttack: 14,
 	meleeAttack: 10,
 	death: 11,
 	dash: 4,
-	hurt: 2,
+	hurt: 4,
 	move: 7,
 	crouch: 9,
 	idle: 9,
@@ -30,7 +31,9 @@ export default class Slime {
 		this.state = 'idle';
 		this.landing = false;
 		this.health = 64;
+		this.roomHealth = this.health;
 		this.radius = this.health / 2;
+		this.iFrames = false;
 		this.healthRegen = false;
 		this.damage = 10;
 		this.redDmgMod = 2;
@@ -58,8 +61,8 @@ export default class Slime {
 				128,
 				this.pos[0],
 				this.pos[1],
-				this.health,
-				this.health
+				this.radius * 2,
+				this.radius * 2,
 			);
 			let focused = this.focus(this.color);
 			this.ctx.putImageData(focused, this.pos[0], this.pos[1]);
@@ -72,8 +75,8 @@ export default class Slime {
 				128,
 				this.pos[0],
 				this.pos[1],
-				this.health,
-				this.health
+				this.radius * 2,
+				this.radius * 2
 			);
 		}
 		if (this.state === 'land' && position === 7) {
@@ -145,6 +148,9 @@ export default class Slime {
 				this.state = 'rangedAttack';
 				break;
 		}
+		if (this.iFrames){
+			this.state = 'hurt'
+		}
 	}
 
 	crouch() {
@@ -152,9 +158,9 @@ export default class Slime {
 		this.moving = true;
 	}
 
-	meleeAttack() {}
+	meleeAttack() {} //For future implementation 
 
-	rangedAttack() {}
+	rangedAttack() {} //For fututre implementation 
 
 	focus(color) {
 		let slimeScan = this.ctx.getImageData(this.pos[0], this.pos[1], 64, 64);
@@ -185,6 +191,9 @@ export default class Slime {
 				this.pos[0] -=
 					Math.sign(this.vel[0]) === 0 ? -1 : Math.sign(this.vel[0]);
 			}
+			if (otherObject instanceof Spike && !this.iFrames){
+				this.takeDamage(10)
+			}
 			this.vel[0] = 0;
 		}
 
@@ -206,10 +215,13 @@ export default class Slime {
 			if (otherObject instanceof ColorPad) {
 				this.floorColor = otherObject.color;
 			}
-			if (this.landing && !this.moving) {
+			if (this.landing && !this.moving && !this.iFrames) {
 				this.state = 'idle';
 			}
 			if (otherObject instanceof Door) this.exited = true;
+			if (otherObject instanceof Spike && !this.iFrames){
+				this.takeDamage(10)
+			}
 		}
 	}
 
@@ -245,6 +257,21 @@ export default class Slime {
 			return true;
 		}
 		return false;
+	}
+
+	takeDamage(damage){
+		this.state = 'hurt';
+		this.iFrames = true;
+		this.health -= damage;
+		this.radius = this.health / 2
+		debugger 
+		if (this.health < 32){
+			this.radius = 17
+		}
+		setTimeout(() => {
+			this.iFrames = false;
+			this.state = 'idle'
+		},1000)
 	}
 
 	resetStats() {

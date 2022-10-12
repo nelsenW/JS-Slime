@@ -8,10 +8,10 @@ export const LEVELS = {
                     '#####               #',
                     '#                   #',
                     '#                   #',
-                    '#                   #',
+                    '#          s        #',
                     '#          #        #',
                     '#                   e',
-                    '#####################']
+                    '##^##################']
     },
     2: {
         monitorText: 'For each test all we need to do is make it to the other side of the room...',
@@ -178,7 +178,8 @@ export class Game{
         this.currentLevel++;
         this.level = new Level(this.ctx, this.canvas, LEVELS[this.currentLevel], this.slime);
         this.allObjects = this.level.objects;
-        this.slime.color = 'blue'
+        this.slime.color = 'blue';
+        this.slime.roomHealth = this.slime.health;
         this.tutorialFinished = false
         this.generateLevel();
     }
