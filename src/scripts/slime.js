@@ -197,6 +197,9 @@ export default class Slime {
 			if (otherObject instanceof Spike && !this.iFrames) {
 				this.takeDamage(10);
 			}
+			if (this.color === 'orange' && this.jumpCount < this.jumpCountMax){
+				this.jumpCount++
+			}
 			this.vel[0] = 0;
 		}
 
@@ -274,9 +277,13 @@ export default class Slime {
 	}
 
 	radiusCheck() {
+		let prev = this.radius
 		this.radius = this.health / 2;
 		if (this.health <= 32) {
 			this.radius = 17;
+		}
+		if (prev < this.radius){
+			this.pos[1] -= (this.radius - prev)
 		}
 	}
 

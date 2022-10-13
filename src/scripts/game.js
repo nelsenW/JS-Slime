@@ -114,7 +114,7 @@ export class Game {
 
 		this.allObjects[
 			this.allObjects.findIndex((el) => el instanceof Door)
-		].color = 'aliceblue';
+		].color = 'lightgreen';
 		this.tutorialFinished = true;
 	}
 	typeSpeed = (ms) => {

@@ -9,7 +9,6 @@ export class Blob {
 		this.vel = [Math.random() * 0.2 - 0.1, Math.random() * 0.5 + 0.5];
 		this.range = Math.random() * 30;
 		this.gravity = Math.random(0 * 0.005);
-		this.color = 'purple';
 	}
 
 	update() {
