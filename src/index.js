@@ -41,6 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	canvas.height = window.innerHeight;
 	canvas.width = window.innerWidth;
 
+	canvas2.height = window.innerHeight;
+	canvas2.width = window.innerWidth;
+
 	let newGameView = new GameView(ctx, canvas);
 
 	retry.addEventListener('click', () => {

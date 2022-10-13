@@ -32,7 +32,9 @@ export default class Slime {
 		this.landing = false;
 		this.health = 64;
 		this.roomHealth = this.health;
-		this.radius = this.health / 2;
+		this.heightMod = this.canvas.width / 1080
+		this.widthMod = this.canvas.width / 1920
+		this.radius = this.health / 2 * this.widthMod;
 		this.iFrames = false;
 		this.maxHealth = 64;
 		this.damage = 10;
@@ -285,6 +287,7 @@ export default class Slime {
 			this.pos[1] -= (this.radius - prev);
 			this.pos[0] -= (this.radius - prev); 	
 		}
+		this.radius *= this.widthMod
 	}
 
 	resetStats() {
