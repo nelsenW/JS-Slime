@@ -3,15 +3,76 @@ Slime JS is a Vanilla Javascript game utilizing only HTML 5 canvas, JS, and CSS 
 
 By using 2d sprite mapping the slime will be able to change colors dynamically based on the absorbed properties and then utilizing a normal map and custom dynamic lighting the details will be added.
 
+
+# Sprite Mapping
+```javascript
+    focus(color) {
+        let slimeScan = this.ctx.getImageData(this.pos[0], this.pos[1], 64, 64);
+        let slimeArr = [];
+        for (let i = 3; i < slimeScan.data.length; i += 4) {
+            slimeArr.push(slimeScan.data[i]);
+            slimeScan.data[i] = 0;
+        }
+        for (let i = 0; i < slimeScan.data.length; i += 4) {
+            let shade = COLORS['blue'][slimeScan.data[i]];
+            if (shade) {
+                slimeScan.data[i] = COLORS[color][shade][0];
+                slimeScan.data[i + 1] = COLORS[color][shade][1];
+                slimeScan.data[i + 2] = COLORS[color][shade][2];
+            }
+        }
+        for (let i = 3; i < slimeScan.data.length; i += 4) {
+            slimeScan.data[i] = slimeArr[(i + 1) / 4];
+        }
+        return slimeScan;
+    }
+```
+# Monitor Typing
+```javascript
+    async generateLevel() {
+		const monitorText = document.querySelector('#monitor-text');
+		monitorText.textContent = '';
+
+		let textArr = this.level.monitorText;
+
+		for (let i = 0; i < textArr.length; i++) {
+			await this.typeSpeed(50);
+			monitorText.textContent += textArr[i];
+		}
+
+		this.allObjects[
+			this.allObjects.findIndex((el) => el instanceof Door)
+		].color = 'lightgreen';
+		this.tutorialFinished = true;
+	}
+	typeSpeed = (ms) => {
+		return new Promise((resolve) => setTimeout(resolve, ms));
+	};
+```
+# Example Level Map
+```javascript
+    21: {
+		monitorText: 'You probably deserve a little break',
+		tileArray: [
+			'#####################',
+			'#       #           #',
+			'#       #           e',
+			'#       #   #####g###',
+			'#       #   #       #',
+			'#       # s #       #',
+			'#       #   #       #',
+			'#       ###o#       #',
+		]
+	}
+```
+
 # Functionality & MVPs
-In Slime JS, users will be able to:
+In Slime JS, users are able to:
 
 * Run and jump
 * Switch colors
 * Utilize different properties of colors 
 * Transition between levels 
-* Attack enemies with both ranged and melee attacks
-
 
 In addition, this project will include:
 
