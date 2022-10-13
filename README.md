@@ -37,7 +37,7 @@ By using 2d sprite mapping the slime will be able to change colors dynamically b
 
 		for (let i = 0; i < textArr.length; i++) {
 			await this.typeSpeed(50);
-			monitorText.textContent += textArr[i];
+			monitorText.textContent += textArr[i];p
 		}
 
 		this.allObjects[
@@ -49,6 +49,27 @@ By using 2d sprite mapping the slime will be able to change colors dynamically b
 		return new Promise((resolve) => setTimeout(resolve, ms));
 	};
 ```
+```css
+#cursor {
+    margin: 0 0 0 10px;
+    padding: 0;
+    display: inline-block;
+    width: 2px;
+    height: 10px;
+    border: .15em solid #1589FF; 
+    background-color: #1589FF;
+    animation: blink .5s linear infinite alternate; 
+    overflow: hidden;
+}
+
+@keyframes blink{
+    0% {opacity: 1;}
+    40% {opacity: 1;}
+    60% {opacity: 0;}
+    100% {opacity: 0;}
+}
+```
+
 # Example Level Map
 ```javascript
     21: {
