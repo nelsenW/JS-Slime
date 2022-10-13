@@ -62,7 +62,7 @@ export default class Slime {
 				this.pos[0],
 				this.pos[1],
 				this.radius * 2,
-				this.radius * 2,
+				this.radius * 2
 			);
 			let focused = this.focus(this.color);
 			this.ctx.putImageData(focused, this.pos[0], this.pos[1]);
@@ -95,7 +95,7 @@ export default class Slime {
 
 	updatepos() {
 		this.pos[0] += this.vel[0];
-		if (this.grav_dir === -1 && this.vel[1] > -this.terminal_vel){
+		if (this.grav_dir === -1 && this.vel[1] > -this.terminal_vel) {
 			this.vel[1] -= this.gravity;
 		} else if (this.grav_dir === 1 && this.vel[1] < this.terminal_vel) {
 			this.vel[1] += this.gravity;
@@ -107,11 +107,11 @@ export default class Slime {
 		switch (slimeMove) {
 			case 'jump':
 				if (this.jumpCount > 0) {
-					debugger
+					debugger;
 					this.state = 'jump';
 					if (this.color === 'pink' && this.jumpCount === 1) {
 						this.vel[1] -= Math.sign(this.grav_dir) * 20;
- 					} else {
+					} else {
 						this.vel[1] = this.terminal_vel * Math.sign(this.grav_dir);
 						this.vel[1] -= Math.sign(this.grav_dir) * 30;
 					}
@@ -140,7 +140,7 @@ export default class Slime {
 			case 'dash':
 				this.dashCount--;
 				this.state = 'dash';
-                this.vel[0] = Math.sign(this.vel[0]) * 24;
+				this.vel[0] = Math.sign(this.vel[0]) * 24;
 				break;
 			case 'meleeAttack':
 				this.moving = true;
@@ -151,8 +151,8 @@ export default class Slime {
 				this.state = 'rangedAttack';
 				break;
 		}
-		if (this.iFrames){
-			this.state = 'hurt'
+		if (this.iFrames) {
+			this.state = 'hurt';
 		}
 	}
 
@@ -161,9 +161,9 @@ export default class Slime {
 		this.moving = true;
 	}
 
-	meleeAttack() {} //For future implementation 
+	meleeAttack() {} //For future implementation
 
-	rangedAttack() {} //For fututre implementation 
+	rangedAttack() {} //For fututre implementation
 
 	focus(color) {
 		let slimeScan = this.ctx.getImageData(this.pos[0], this.pos[1], 64, 64);
@@ -187,21 +187,21 @@ export default class Slime {
 	}
 
 	isCollidedWith(otherObject) {
-        this.exited = false;
+		this.exited = false;
 		if (this.horizontalCollision(otherObject)) {
 			if (otherObject instanceof Door) this.exited = true;
 			while (this.horizontalCollision(otherObject)) {
 				this.pos[0] -=
 					Math.sign(this.vel[0]) === 0 ? -1 : Math.sign(this.vel[0]);
 			}
-			if (otherObject instanceof Spike && !this.iFrames){
-				this.takeDamage(10)
+			if (otherObject instanceof Spike && !this.iFrames) {
+				this.takeDamage(10);
 			}
 			this.vel[0] = 0;
 		}
 
 		if (this.verticalCollision(otherObject)) {
-            if (this.jumpCount < this.jumpCountMax &&  Math.abs(this.vel[1]) >= 0) {
+			if (this.jumpCount < this.jumpCountMax && Math.abs(this.vel[1]) >= 0) {
 				this.state = 'land';
 				this.jumpCount++;
 			}
@@ -214,7 +214,7 @@ export default class Slime {
 			}
 			this.vel[1] = 0;
 			this.floorColor = null;
-			
+
 			if (otherObject instanceof ColorPad) {
 				this.floorColor = otherObject;
 			}
@@ -222,8 +222,8 @@ export default class Slime {
 				this.state = 'idle';
 			}
 			if (otherObject instanceof Door) this.exited = true;
-			if (otherObject instanceof Spike && !this.iFrames){
-				this.takeDamage(10)
+			if (otherObject instanceof Spike && !this.iFrames) {
+				this.takeDamage(10);
 			}
 		}
 	}
@@ -262,21 +262,21 @@ export default class Slime {
 		return false;
 	}
 
-	takeDamage(damage){
+	takeDamage(damage) {
 		this.state = 'hurt';
 		this.iFrames = true;
 		this.health -= damage;
-		this.radiusCheck()
+		this.radiusCheck();
 		setTimeout(() => {
 			this.iFrames = false;
-			this.state = 'idle'
-		},1000)
+			this.state = 'idle';
+		}, 1000);
 	}
 
-	radiusCheck(){
-		this.radius = this.health / 2
-		if (this.health <= 32){
-			this.radius = 17
+	radiusCheck() {
+		this.radius = this.health / 2;
+		if (this.health <= 32) {
+			this.radius = 17;
 		}
 	}
 

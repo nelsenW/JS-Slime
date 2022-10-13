@@ -24,7 +24,7 @@ export default class GameView {
 			this.gameOverScreen.style.display = 'flex';
 			this.gameOverMenu.style.display = 'flex';
 			this.finalScore.textContent = this.game.score;
-            window.cancelAnimationFrame(this.gameLoop)
+			window.cancelAnimationFrame(this.gameLoop);
 			return;
 		}
 		this.game.step();
@@ -90,7 +90,7 @@ export default class GameView {
 					if (this.game.slime.color === 'blue') {
 						switch (floorColor) {
 							case 'red':
-                                this.game.slime.vel[1] *= -1 
+								this.game.slime.vel[1] *= -1;
 								this.game.slime.grav_dir = -1;
 								this.game.slime.color = 'red';
 								break;
@@ -108,7 +108,11 @@ export default class GameView {
 									diff > 20
 										? (this.game.slime.health += 20)
 										: (this.game.slime.health += diff);
-                                    this.game.allObjects[this.game.allObjects.findIndex(el => el instanceof ColorPad && el.color === 'green')].color = 'clear';
+									this.game.allObjects[
+										this.game.allObjects.findIndex(
+											(el) => el instanceof ColorPad && el.color === 'green'
+										)
+									].color = 'clear';
 									this.game.slime.radiusCheck();
 								}
 								break;
@@ -118,9 +122,9 @@ export default class GameView {
 								break;
 							case 'pink':
 								this.game.slime.jumpCountMax = 2;
-                                this.game.slime.jumpCount = 2;
+								this.game.slime.jumpCount = 2;
 								this.game.slime.color = 'pink';
-                                debugger
+								debugger;
 								break;
 						}
 					}

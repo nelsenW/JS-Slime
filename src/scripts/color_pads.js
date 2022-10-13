@@ -29,10 +29,10 @@ export const COLORS = {
 	},
 	blue: {
 		lighterShade: [163, 192, 244],
-		lightShade:   [109, 154, 238],
-		baseShade:    [54, 11, 231],
-		darkShade:    [24, 86, 201],
-		darkerShade:  [17, 62, 146],
+		lightShade: [109, 154, 238],
+		baseShade: [54, 11, 231],
+		darkShade: [24, 86, 201],
+		darkerShade: [17, 62, 146],
 		163: 'lighterShade',
 		109: 'lightShade',
 		54: 'baseShade',
@@ -53,7 +53,7 @@ export const COLORS = {
 		darkShade: [255, 31, 109],
 		darkerShade: [204, 0, 71],
 	},
-	clear: {}
+	clear: {},
 };
 
 export class ColorPad {
@@ -68,10 +68,19 @@ export class ColorPad {
 	}
 
 	animate() {
-        const padSheet = document.querySelector("#pad-sheet")
-        let position = Object.keys(COLORS).indexOf(this.color)
-        let x = 256 * position
-        this.ctx.drawImage(padSheet, x, 0, 256, 256, this.pos[0], this.pos[1], this.width, this.height);  
-    }
+		const padSheet = document.querySelector('#pad-sheet');
+		let position = Object.keys(COLORS).indexOf(this.color);
+		let x = 256 * position;
+		this.ctx.drawImage(
+			padSheet,
+			x,
+			0,
+			256,
+			256,
+			this.pos[0],
+			this.pos[1],
+			this.width,
+			this.height
+		);
+	}
 }
-
