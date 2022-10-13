@@ -284,7 +284,7 @@ export default class Slime {
 		}
 		if (prev < this.radius){
 			this.pos[1] -= (this.radius - prev);
-			this.pos[0] -= (this.radius * 2 - prev)
+			this.pos[0] -= (this.radius - prev); 	
 		}
 	}
 

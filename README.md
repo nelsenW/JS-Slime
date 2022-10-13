@@ -1,42 +1,44 @@
-Background: 
+# Background: 
 Slime JS is a Vanilla Javascript game utilizing only HTML 5 canvas, JS, and CSS to create a rouguelite 2D platformer with the main character being a Slime. The main objective of the game is to escape the labratory you are being held in (against your will). The key mechanic of the game revolves around the slime being able to absorb properties of different panels and therefore be able to activate different abilities.
 
 By using 2d sprite mapping the slime will be able to change colors dynamically based on the absorbed properties and then utilizing a normal map and custom dynamic lighting the details will be added.
 
-
+# Functionality & MVPs
 In Slime JS, users will be able to:
 
--- Run and jump
--- Switch colors
--- Utilize different properties of colors 
--- Transition between levels 
--- Attack enemies with both ranged and melee attacks
+* Run and jump
+* Switch colors
+* Utilize different properties of colors 
+* Transition between levels 
+* Attack enemies with both ranged and melee attacks
 
 
 In addition, this project will include:
 
--- Instructions for how to play the game
--- A production README 
--- A pause menu
--- A tutorial
+* Instructions for how to play the game
+* A production README 
+* A pause menu
+* A tutorial
 
 
-Wireframe: https://wireframe.cc/JzH55B
+# Wireframe: 
+![alt text](https://wireframe.cc/JzH55B)
 
--- The about section will include liks to the Github repo, my LinkedIN and potentially my Devsite
--- Menu will include an instructions, and settings toggle, with settings for fullscreen and sound
+* The about section will include liks to the Github repo, my LinkedIN and potentially my Devsite
+* Menu will include an instructions, and settings toggle, with settings for fullscreen and sound
     -potential bonus feature of a tutorial skip and difficulty level
--- Start game will cause an animation that splays into the tutorial
+* Start game will cause an animation that splays into the tutorial
 
 
+# Technologies, Libraries, APIs 
 This project will be implemented with the following technologies:
 
- -- The Canvas API to render the game board
- -- Webpack and Babel to bundle and transpile the source JavaScript code
- -- npm to manage project dependencies
+ * The Canvas API to render the game board
+ * Webpack and Babel to bundle and transpile the source JavaScript code
+ * npm to manage project dependencies
 
 
-Implementation Timeline:
+# Implementation Timeline:
 
 Thursday: Develop wireframe and project outline while also setting up the project and getting webpack running. In the afternoon a simple initial slime sprite will be generated to be used instead of a base circle.
 
@@ -60,6 +62,6 @@ Thursday(afternoon): Present and serve jello.
 Bonus features:
 As the game develops it make take different shapes much like our humble slime. Hence the bonus features could change but things I would like to implement:
 
---dynamic lighting (from Normal Map)
---combination of abilities 
---2d softbody mesh for the slime
+* dynamic lighting (from Normal Map)
+* combination of abilities 
+* 2d softbody mesh for the slime
