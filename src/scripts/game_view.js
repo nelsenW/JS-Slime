@@ -24,6 +24,7 @@ export default class GameView {
 			this.gameOverScreen.style.display = 'flex';
 			this.gameOverMenu.style.display = 'flex';
 			this.finalScore.textContent = this.game.score;
+            window.cancelAnimationFrame(this.gameLoop)
 			return;
 		}
 		this.game.step();
@@ -117,7 +118,9 @@ export default class GameView {
 								break;
 							case 'pink':
 								this.game.slime.jumpCountMax = 2;
+                                this.game.slime.jumpCount = 2;
 								this.game.slime.color = 'pink';
+                                debugger
 								break;
 						}
 					}

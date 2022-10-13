@@ -107,6 +107,7 @@ export default class Slime {
 		switch (slimeMove) {
 			case 'jump':
 				if (this.jumpCount > 0) {
+					debugger
 					this.state = 'jump';
 					if (this.color === 'pink' && this.jumpCount === 1) {
 						this.vel[1] -= Math.sign(this.grav_dir) * 20;
@@ -274,7 +275,7 @@ export default class Slime {
 
 	radiusCheck(){
 		this.radius = this.health / 2
-		if (this.health < 32){
+		if (this.health <= 32){
 			this.radius = 17
 		}
 	}

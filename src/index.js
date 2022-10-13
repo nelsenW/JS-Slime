@@ -36,10 +36,10 @@ document.addEventListener("DOMContentLoaded", () =>{
         newGameView.game.deaths++
         newGameView.game.score -= 1000; 
         newGameView.game.slime.health = newGameView.game.slime.roomHealth;
+        newGameView.game.slime.resetStats()
         newGameView.game.slime.radiusCheck()
         newGameView.game.level = new Level(ctx, canvas, LEVELS[newGameView.game.currentLevel], newGameView.game.slime)
         newGameView.start(); 
-        startFunc();
     });
 
     const startFunc = () => {

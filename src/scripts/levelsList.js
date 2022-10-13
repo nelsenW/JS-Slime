@@ -8,7 +8,7 @@ export const LEVELS = {
                     '#          s        #',
                     '#          #        #',
                     '#                   e',
-                    '#####################']
+                    '###p ################']
     },
     2: {
         monitorText: 'For each test all we need to do is make it to the other side of the room...',
@@ -148,10 +148,10 @@ export const LEVELS = {
                     '#                        #',
                     '#                        #',
                     '#                        #',
+                    '#####                    #',
+                    '#    #                   #',
+                    '#  s ###                 #',
                     '#                        #',
-                    '######                   #',
-                    '#    ###                 #',
-                    '#  s                     #',
                     '#^######################e#']
     },
     14:{
