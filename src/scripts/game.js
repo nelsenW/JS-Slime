@@ -63,7 +63,7 @@ export class Game{
     }
 
     checkGameStatus(){
-        if (this.slime.pos[1] > this.canvas.height){
+        if (this.slime.pos[1] > this.canvas.height || this.slime.pos[1] + this.slime.health < 0){
             return true
         } 
         if (this.slime.health <= 0){

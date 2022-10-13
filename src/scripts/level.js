@@ -33,7 +33,10 @@ export class Level {
                         objectsArray.push(new Door(this.ctx, [x, y], TileWidth, TileHeight));
                         break;
                     case ('#'):
-                        objectsArray.push(new Floor(this.ctx, [x,y], TileWidth, TileHeight));
+                        objectsArray.push(new Floor(this.ctx, [x,y], TileWidth, TileHeight, 'slategrey'));
+                        break;
+                    case ('_'):
+                        objectsArray.push(new Floor(this.ctx, [x,y], TileWidth, TileHeight, 'aliceblue'));
                         break;
                     case ('r'):
                         objectsArray.push(new ColorPad(this.ctx, 'red', [x,y], TileWidth, TileHeight));
@@ -68,12 +71,12 @@ export class Level {
 }   
 
 class Floor{
-    constructor(ctx, position, width, height){
+    constructor(ctx, position, width, height, color){
         this.ctx = ctx;
         this.pos =  position;
         this.width = width;
         this.height = height;
-        this.color = 'slategrey';
+        this.color = color;
     }
 
     animate(){

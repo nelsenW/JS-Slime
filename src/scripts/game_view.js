@@ -109,7 +109,7 @@ export default class GameView {
 										? (this.game.slime.health += 20)
 										: (this.game.slime.health += diff);
                                     this.game.allObjects[this.game.allObjects.findIndex(el => el instanceof ColorPad && el.color === 'green')].color = 'clear';
-									this.game.slime.radius = this.game.slime.health / 2;
+									this.game.slime.radiusCheck();
 								}
 								break;
 							case 'violet':

@@ -12,10 +12,11 @@ document.addEventListener("DOMContentLoaded", () =>{
     const closeButton2 = document.getElementById("close-button2");
     const about = document.getElementById('about');
     const aboutMenu = document.querySelector('.about-menu');
-    const controls = document.querySelector('#controls');
+    const controls = document.querySelectorAll('.controls');
     const controlsMenu = document.querySelector('.controls-menu');
     const gameOverScreen = document.querySelector('.game-over-screen');
     const gameOverMenu = document.querySelector('#game-over-menu');
+    const mainMenuButtons = document.querySelectorAll('.main-menu')
     const monitor = document.querySelector('.monitor')
     const retry = document.getElementById('retry')
 
@@ -48,6 +49,10 @@ document.addEventListener("DOMContentLoaded", () =>{
         newGameView.game.slime.gravity = 0.98
     }
     
+    mainMenuButtons.forEach((button)=>{
+        button.addEventListener('click', ()=>{window.location.reload()})
+    })
+
     startGame.addEventListener("click", () => {
         monitor.style.display = 'flex';
         canvas.style.filter = 'none';
@@ -66,9 +71,11 @@ document.addEventListener("DOMContentLoaded", () =>{
         aboutMenu.style.display = 'flex';
     });
 
-    controls.addEventListener("click", () => {
-        startMenu.style.display = 'none';
-        controlsMenu.style.display = 'flex';
+    controls.forEach((control) => {
+        control.addEventListener("click", () => {
+            startMenu.style.display = 'none';
+            controlsMenu.style.display = 'flex';
+        })
     });
 
     closeButton.addEventListener("click", () =>{
