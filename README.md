@@ -22,7 +22,7 @@ In addition, this project will include:
 
 
 # Wireframe: 
-![alt text](https://wireframe.cc/JzH55B)
+![Alt text](src/images/Screen%20Shot%202022-10-13%20at%2010.45.43%20AM.png?raw=true "Wireframe")
 
 * The about section will include liks to the Github repo, my LinkedIN and potentially my Devsite
 * Menu will include an instructions, and settings toggle, with settings for fullscreen and sound
