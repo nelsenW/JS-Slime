@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const startMenu = document.querySelector('.start-menu');
 	const closeButton = document.getElementById('close-button');
 	const closeButton2 = document.getElementById('close-button2');
+	const closeButton3 = document.getElementById('close-button3')
 	const about = document.getElementById('about');
 	const aboutMenu = document.querySelector('.about-menu');
 	const controls = document.querySelectorAll('.controls');
@@ -19,6 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	const mainMenuButtons = document.querySelectorAll('.main-menu');
 	const monitor = document.querySelector('.monitor');
 	const retry = document.getElementById('retry');
+	const levelSelectorList = document.querySelector("#levels-selector-list")
+	const levels = document.getElementById('levels')
+	const levelSelector = document.querySelector(".levels-selector")
 
 	const canvas = document.querySelector('#canvas');
 	const canvas2 = document.getElementById('canvas2');
@@ -56,6 +60,30 @@ document.addEventListener('DOMContentLoaded', () => {
 		newGameView.start();
 	});
 
+	for(const [key, value] of Object.entries(LEVELS)){
+		let btn = document.createElement("button")
+		btn.id = `level-${key}`
+		btn.textContent = key
+		levelSelectorList.appendChild(btn)
+	};
+
+	levelSelectorList.addEventListener("click", (e) => {
+		monitor.style.display = 'flex';
+		// monitor.textContent = ''
+		canvas.style.filter = 'none';
+		canvas.style.backgroundColor = 'aliceblue';
+		body.requestFullscreen();
+		window.cancelAnimationFrame(slimeLoop);
+		slimeLoopCancelled = true;
+		clearInterval(slimeHomeColors);
+		levelSelector.style.display = 'none'; // delete to go to old cdd
+		debugger
+		newGameView.game.nextLevel(+e.target.textContent)
+		newGameView.start(); // move up to create better css
+		startFunc();
+	})
+
+
 	const startFunc = () => {
 		newGameView.game.slime.color = 'blue';
 		newGameView.bindKeyHandlers();
@@ -86,6 +114,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		aboutMenu.style.display = 'flex';
 	});
 
+	levels.addEventListener('click', () => {
+		startMenu.style.display = 'none';
+		levelSelector.style.display = 'flex';
+	});
+
 	controls.forEach((control) => {
 		control.addEventListener('click', () => {
 			startMenu.style.display = 'none';
@@ -101,6 +134,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	closeButton2.addEventListener('click', () => {
 		startMenu.style.display = 'flex';
 		controlsMenu.style.display = 'none';
+	});
+
+	closeButton3.addEventListener('click', () => {
+		startMenu.style.display = 'flex';
+		levelSelector.style.display = 'none';
 	});
 
 	/// chunk
