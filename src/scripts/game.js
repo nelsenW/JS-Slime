@@ -84,10 +84,10 @@ export class Game {
 		return false;
 	}
 
-	nextLevel() {
+	nextLevel(passedLevel = 2) {
 		this.score += this.level.score;
 		this.slime.exited = false;
-		this.currentLevel++;
+		this.currentLevel += passedLevel - 1;
 		this.level = new Level(
 			this.ctx,
 			this.canvas,

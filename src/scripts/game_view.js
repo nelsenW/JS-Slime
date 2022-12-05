@@ -1,5 +1,7 @@
 import { Game } from './game.js';
 import { ColorPad } from './color_pads.js';
+import { Level } from './level.js';
+import { LEVELS } from './levelsList.js';
 
 export default class GameView {
 	constructor(ctx, canvas) {
@@ -139,6 +141,19 @@ export default class GameView {
 				case 'KeyS':
 					this.game.slime.move('rangedAttack');
 					this.game.frame = 0;
+					break;
+				case 'KeyR':
+					this.game.deaths++;
+					this.game.score -= 1000;
+					this.game.slime.health = this.game.slime.roomHealth;
+					this.game.slime.resetStats();
+					this.game.slime.radiusCheck();
+					this.game.level = new Level(
+						this.ctx,
+						this.canvas,
+						LEVELS[this.game.currentLevel],
+						this.game.slime
+					);
 					break;
 			}
 		});

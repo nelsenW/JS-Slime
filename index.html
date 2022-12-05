@@ -26,6 +26,7 @@
     <img id="slime-sheet" src="src/images/Slimesheet.png" hidden>
     <img id="pad-sheet" src="src/images/Pad.png" hidden>
     <img src="src/images/Spike.png" id="spike-sheet" hidden >
+    <img src="src/images/directions.png" id="directions" hidden>
 
     <div class="start-menu">
         <div class="title">
@@ -36,6 +37,7 @@
             <button id="startgame">Start Game</button>
             <button id="about">About</button>
             <button class="controls">Controls</button>
+            <button id="levels">Levels</button>
         </nav>
     </div>
 
@@ -58,11 +60,20 @@
             </form>
             <h2>Credits: </h2>
                 <p>Artwork: William Nelsen</p>
-                <p>Music: Mac Waters?</p>
                 <p>Code Production: Me also</p>
         </fieldset>
         
     </nav>
+
+    <nav class="levels-selector">
+        <button id="close-button3">x</button>
+        <fieldset>
+            <p>Warning! Levels are meant to be played sequentially so accessing some levels ahead of sequence will cause them to not be playable.</p>
+            <ul id="levels-selector-list">
+            </ul>
+        </fieldset>
+    </nav>
+
 
     <nav class="controls-menu">
         <button id="close-button2">x</button>
@@ -70,11 +81,12 @@
             <ul>
                 <li>Left Arrow: move-left</li>
                 <li>Right Arrow: move-right</li>
-                <li>Up Arrow: Jump</li>
+                <li>Up Arrow: jump</li>
                 <li>P: pause menu</li>
                 <li>F: switch colors</li>
                 <li>Spacebar: reset color</li>
                 <li>D: dash</li>
+                <li>R: reset level</li>
             </ul>
         </fieldset>
     </nav>

@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
     overflow: hidden;
+    forced-color-adjust: none;
 }
 
 html{
@@ -33,21 +34,22 @@ body {
     background-color: transparent;
     display: flex;
     position: absolute;
-    top: -5%;
-    left: 72%;
-    width: 100%;
-    height: 100%;
+    top: -2%;
+    left: 70%;
     opacity: 1;
-    z-index: -1;
+    z-index: 1;
 }
 
 .start-menu {
     color: cornflowerblue;
+    background-color: aliceblue;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     position: fixed;
     top: 40%;
-    left: 47%;
+    left: 45%;
+    border-radius: 10px;
 }
 
 .about-menu {
@@ -68,6 +70,21 @@ body {
     left: 47%;
 }
 
+.levels-selector {
+    color: cornflowerblue;
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 10%;
+    width: 30%;
+}
+
+#levels-selector-list{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
 
 .title {
     display: flex;
@@ -89,6 +106,11 @@ button{
     background-color: cornflowerblue;
     font-family: 'Fredoka One';
     border-radius: 10px;
+}
+
+#levels-selector-list button{
+    padding: 15px;
+    margin: 10px;
 }
 
 #pause-menu{
@@ -120,8 +142,22 @@ fieldset legend{
 }
 
 #close-button{
-    padding:0;
-    margin:0 2px;
+    padding: 4px;;
+    margin:0 4px;
+    position: absolute;
+    left: 85%;
+}
+
+#close-button2{
+    padding: 4px;;
+    margin:0 4px;
+    position: absolute;
+    left: 85%;
+}
+
+#close-button3{
+    padding:4px;
+    margin:0 4px;
     position: absolute;
     left: 85%;
 }
