@@ -103,9 +103,45 @@ body {
 button{
     padding: 5px 20px;
     margin: 5px 5px;
-    background-color: cornflowerblue;
+    background-color: transparent;
     font-family: 'Fredoka One';
     border-radius: 10px;
+    position: relative;
+}
+.slime{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: calc(100% + 22px);
+    left: 0;
+    background-color: #1589FF;
+    transition: all 1s;
+    z-index: -1;
+}
+
+.slime::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 22px;
+    background-image: url('./images/wave.png');
+    top: -22px;
+    animation: slime 0.5s linear infinite;
+}
+
+button:hover .slime{
+    top: 0;
+}
+
+
+
+@keyframes slime {
+    0%{ 
+        background-position-x: 0 ;
+    }
+    100%{
+        background-position-x: 122px;
+    }
 }
 
 #levels-selector-list button{
