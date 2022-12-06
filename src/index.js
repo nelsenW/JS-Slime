@@ -80,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		slimeLoopCancelled = true;
 		clearInterval(slimeHomeColors);
 		levelSelector.style.display = 'none'; // delete to go to old cdd
-		debugger
 		newGameView.game.nextLevel(+e.target.textContent)
 		newGameView.start(); // move up to create better css
 		startFunc();
@@ -171,7 +170,9 @@ document.addEventListener('DOMContentLoaded', () => {
 		blobArray.forEach((blob) => blob.draw(ctx));
 		slime1.animate(frame, 5);
 		if (!slimeLoopCancelled) {
-			window.requestAnimationFrame(slimeLoop);
+			setTimeout(() => {
+				window.requestAnimationFrame(slimeLoop);
+			}, 1000 / 60)
 		}
 	};
 

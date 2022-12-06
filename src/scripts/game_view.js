@@ -126,7 +126,6 @@ export default class GameView {
 								this.game.slime.jumpCountMax = 2;
 								this.game.slime.jumpCount = 2;
 								this.game.slime.color = 'pink';
-								debugger;
 								break;
 						}
 					}
