@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (!slimeLoopCancelled) {
 			setTimeout(() => {
 				window.requestAnimationFrame(slimeLoop);
-			}, 1000 / 60)
+			}, 1000 / 30)
 		}
 	};
 
