@@ -7,20 +7,19 @@ import { ANIMATIONS } from './slime';
 const HINTS = {
 	move: { word: 'MOVE', state: 'move', keys: ['left', 'right'] },
 	jump: { word: 'JUMP', state: 'jump', keys: ['up'] },
-	doubleJump: { word: 'DOUBLE JUMP', state: 'jump', keys: ['up', 'up'], color: 'pink' },
+	doubleJump: { word: 'DOUBLE', state: 'jump', keys: ['up', 'up'], color: 'pink' },
 	// from/to animate a colour change on a key press; omitted means grey.
 	absorb: { word: 'ABSORB', state: 'idle', keys: ['F'], to: 'red' },
 	dash: { word: 'DASH', state: 'dash', keys: ['D'], color: 'yellow', speedLines: true },
-	reset: { word: 'RESET COLOR', state: 'idle', keys: ['SPACE'], from: 'pink' },
-	heal: { word: 'HEAL', state: 'idle', keys: ['F'], to: 'green', grow: true, caption: 'one use' },
-	spikes: { word: 'SPIKES HURT', state: 'hurt', keys: [], spikes: true },
+	reset: { word: 'RESET', state: 'idle', keys: ['SPACE'], from: 'pink' },
+	heal: { word: 'HEAL', state: 'idle', keys: ['F'], to: 'green', grow: true },
+	spikes: { word: 'SPIKE', state: 'hurt', keys: [], spikes: true },
 	wallClimb: {
-		word: 'WALL CLIMB',
+		word: 'CLIMB',
 		state: 'jump',
 		keys: ['right', 'up'],
 		color: 'orange',
 		climb: true,
-		caption: 'hold both',
 	},
 };
 
@@ -189,12 +188,6 @@ export const drawHints = (ctx, canvas, level, frame) => {
 			const offset = (i - (hint.keys.length - 1) / 2) * gap;
 			drawKey(ctx, cx + offset, keyY, unit, key, keyPressed);
 		});
-		if (hint.caption) {
-			ctx.font = `${Math.round(unit * 0.15)}px "Fredoka One", sans-serif`;
-			ctx.textAlign = 'center';
-			ctx.textBaseline = 'top';
-			ctx.fillText(hint.caption, cx, keyY + unit * 0.27);
-		}
 	}
 	ctx.restore();
 };
