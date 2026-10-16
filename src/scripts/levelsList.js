@@ -2,6 +2,10 @@ export const LEVELS = {
 	1: {
 		monitorText:
 			'Welcome to the test lab subject #8X75G2, please proceed to the right to begin testing...',
+		hints: [
+			{ type: 'move', at: [4.5, 3.4] },
+			{ type: 'jump', at: [16.5, 3.4] },
+		],
 		tileArray: [
 			'#####################',
 			'#                   #',
@@ -58,6 +62,7 @@ export const LEVELS = {
 	5: {
 		monitorText:
 			'Focus on a pad by pressing F and you should be able to change colors.',
+		hints: [{ type: 'absorb', at: [6.5, 4.2] }],
 		tileArray: [
 			'#####################',
 			'#                   e',
@@ -72,6 +77,7 @@ export const LEVELS = {
 	6: {
 		monitorText:
 			'Thats a big hole... hot damn. Being pink gives you a double jump btw...',
+		hints: [{ type: 'doubleJump', at: [12.5, 3.4] }],
 		tileArray: [
 			'#####################',
 			'#                   #',
@@ -86,6 +92,7 @@ export const LEVELS = {
 	7: {
 		monitorText:
 			'yellow on the other hand gives you the ability to dash with the D button',
+		hints: [{ type: 'dash', at: [4.5, 3.2] }],
 		tileArray: [
 			'#####################',
 			'#        #    #     #',
@@ -99,6 +106,7 @@ export const LEVELS = {
 	},
 	8: {
 		monitorText: 'Press space to turn blue so you can reabsorb another color',
+		hints: [{ type: 'reset', at: [4.5, 3.6] }],
 		tileArray: [
 			'#####################',
 			'#         #####     #',
@@ -127,6 +135,7 @@ export const LEVELS = {
 	10: {
 		monitorText:
 			'This is extremely important!!! Those pointy things will rip chunks off of you. If you get small enough you will die.',
+		hints: [{ type: 'spikes', at: [8.5, 3.9] }],
 		tileArray: [
 			'#####################',
 			'#                   #',
@@ -154,6 +163,7 @@ export const LEVELS = {
 	12: {
 		monitorText:
 			'Green pads are a one time use but will restore you a bit of health',
+		hints: [{ type: 'heal', at: [7.5, 4.0] }],
 		tileArray: [
 			'#####################',
 			'#                   #',
@@ -368,6 +378,7 @@ export const LEVELS = {
 	},
 	21: {
 		monitorText: 'You probably deserve a little break',
+		hints: [{ type: 'wallClimb', at: [4.5, 3.6] }],
 		tileArray: [
 			'#####################',
 			'#       #           #',

@@ -30,7 +30,7 @@ export const COLORS = {
 	blue: {
 		lighterShade: [163, 192, 244],
 		lightShade: [109, 154, 238],
-		baseShade: [54, 11, 231],
+		baseShade: [54, 116, 231],
 		darkShade: [24, 86, 201],
 		darkerShade: [17, 62, 146],
 		163: 'lighterShade',
@@ -84,3 +84,15 @@ export class ColorPad {
 		);
 	}
 }
+
+// Points the menu button hover highlight (CSS --slime-* vars) at a slime colour.
+export const setHighlightColor = (color) => {
+	const shades = COLORS[color];
+	if (!shades || !shades.baseShade) return;
+	const [r, g, b] = shades.lightShade;
+	const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+	const root = document.documentElement.style;
+	root.setProperty('--slime-light', `rgb(${r}, ${g}, ${b})`);
+	root.setProperty('--slime-base', `rgb(${shades.baseShade.join(', ')})`);
+	root.setProperty('--slime-text', luminance < 0.5 ? 'white' : 'black');
+};

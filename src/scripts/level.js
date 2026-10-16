@@ -13,6 +13,9 @@ export class Level {
 
 	optionsBreaker(optionsHash) {
 		this.monitorText = optionsHash['monitorText'];
+		this.hints = optionsHash['hints'] || [];
+		this.rows = optionsHash['tileArray'].length;
+		this.cols = optionsHash['tileArray'][0].length;
 		return this.tileMapping(optionsHash['tileArray']);
 	}
 

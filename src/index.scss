@@ -32,24 +32,41 @@ body {
 
 #canvas2 {
     background-color: transparent;
-    display: flex;
-    position: absolute;
-    top: -2%;
-    left: 70%;
-    opacity: 1;
-    z-index: 1;
+    display: block;
+    width: 4.5em;
+    height: 4.5em;
+    margin-bottom: -0.75em; // sprite has empty space under the slime
 }
 
 .start-menu {
     color: cornflowerblue;
     background-color: aliceblue;
-    padding: 10px;
+    // Everything inside is sized in em, so the menu scales with the screen.
+    font-size: clamp(14px, 2.4vmin, 32px);
+    padding: 0.9em 1.6em 1.3em;
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 40%;
-    left: 45%;
-    border-radius: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 0.8em;
+}
+
+.start-menu h1 {
+    font-size: 2.6em;
+}
+
+.start-menu button {
+    font-size: 1em;
+    padding: 0.5em 2.2em;
+    margin: 0.4em 0;
+    border-radius: 0.6em;
+}
+
+// The global overflow: hidden clips buttons as they grow on hover.
+.start-menu, nav, fieldset, form, ul, #game-over-menu, #levels-selector-list {
+    overflow: visible;
 }
 
 .about-menu {
@@ -90,8 +107,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 200px;
-    height: 48px;
+    gap: 0.7em;
+    margin-bottom: 0.5em;
 }
 
 
@@ -108,53 +125,27 @@ button{
     border-radius: 10px;
     position: relative;
 }
-.slime{
-    position: absolute;
-    width: 420px;
-    height: 108px;
-    right: 100%;
-    bottom: -54px;
-    z-index: -1;
-    background-image: url('../src/images/wave.png');
-    background-size: 420px 108px;
+// Hover highlight follows the slime's current colour; the --slime-*
+// variables are set from JS (see setHighlightColor in color_pads.js).
+:root {
+    --slime-light: rgb(109, 154, 238);
+    --slime-base: rgb(54, 116, 231);
+    --slime-text: black;
 }
 
-button:hover .slime{
-    animation: slimy 4s linear infinite;
+button {
+    transition: transform 0.15s ease, background-color 0.3s ease,
+        border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
 }
 
-button:hover .slime::before{
-    
-    // z-index: 1;
+button:hover,
+button:focus-visible {
+    transform: scale(1.08);
+    background-color: var(--slime-light);
+    border-color: var(--slime-base);
+    color: var(--slime-text);
+    box-shadow: 0 0 10px var(--slime-base);
 }
-
-button:hover {
-    background-color: transparent;
-}
-
-@keyframes slimy {
-    0%{
-        bottom: -54px;
-        right: -200%;
-    }
-    25%{
-        bottom: -27px;
-        right: -100%;
-    }
-    50%{
-        bottom: -54px;
-        right: 0%;
-    }
-    75%{
-        bottom: -27px;
-        right: -100%;
-    }
-    100%{
-        bottom: -54px;
-        right: -200%;
-    }
-}
-
 
 #levels-selector-list button{
     padding: 15px;

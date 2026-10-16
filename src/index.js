@@ -1,8 +1,9 @@
 import { Blob } from './scripts/home_animation';
 import { LEVELS } from './scripts/levelsList';
 import GameView from './scripts/game_view.js';
-import { Level } from './scripts/level.js';
 import Slime from './scripts/slime.js';
+import { getSlimeSheet } from './scripts/slime_sprites.js';
+import { setHighlightColor } from './scripts/color_pads.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 	const body = document.querySelector('body');
@@ -41,46 +42,67 @@ document.addEventListener('DOMContentLoaded', () => {
 	canvas.height = window.innerHeight;
 	canvas.width = window.innerWidth;
 
-	canvas2.height = window.innerHeight;
-	canvas2.width = window.innerWidth;
+	// The menu slime has a fixed size so it stays put in the fixed-size menu.
+	const MENU_SLIME_SIZE = 128;
+	canvas2.height = MENU_SLIME_SIZE;
+	canvas2.width = MENU_SLIME_SIZE;
 
 	let newGameView = new GameView(ctx, canvas);
+
+	// Pre-render the recolored slime sheets once the source image is ready.
+	const slimeSheet = document.getElementById('slime-sheet');
+	if (slimeSheet.complete) getSlimeSheet('blue');
+	else slimeSheet.addEventListener('load', () => getSlimeSheet('blue'));
+
+	// Safari/iOS may lack requestFullscreen or reject it; never let that throw.
+	const enterFullscreen = (el) => {
+		const request = el.requestFullscreen || el.webkitRequestFullscreen;
+		if (!request) return;
+		try {
+			const result = request.call(el);
+			if (result && result.catch) result.catch(() => {});
+		} catch (err) {}
+	};
+
+	window.addEventListener('resize', () => {
+		const width = window.innerWidth;
+		const height = window.innerHeight;
+		if (width === canvas.width && height === canvas.height) return;
+		const scaleX = width / canvas.width;
+		const scaleY = height / canvas.height;
+		canvas.width = width;
+		canvas.height = height;
+		newGameView.resize(scaleX, scaleY);
+	});
 
 	retry.addEventListener('click', () => {
 		gameOverScreen.style.display = 'none';
 		gameOverMenu.style.display = 'none';
-		newGameView.game.deaths++;
-		newGameView.game.score -= 1000;
-		newGameView.game.slime.health = newGameView.game.slime.roomHealth;
-		newGameView.game.slime.resetStats();
-		newGameView.game.slime.radiusCheck();
-		newGameView.game.level = new Level(
-			ctx,
-			canvas,
-			LEVELS[newGameView.game.currentLevel],
-			newGameView.game.slime
-		);
+		newGameView.game.resetRoom();
 		newGameView.start();
 	});
 
 	for(const [key, value] of Object.entries(LEVELS)){
 		let btn = document.createElement("button")
 		btn.id = `level-${key}`
+		btn.dataset.level = key
 		btn.textContent = key
 		levelSelectorList.appendChild(btn)
 	};
 
 	levelSelectorList.addEventListener("click", (e) => {
+		const btn = e.target.closest('button');
+		if (!btn || !levelSelectorList.contains(btn)) return;
 		monitor.style.display = 'flex';
 		// monitor.textContent = ''
 		canvas.style.filter = 'none';
 		canvas.style.backgroundColor = 'aliceblue';
-		body.requestFullscreen();
+		enterFullscreen(body);
 		window.cancelAnimationFrame(slimeLoop);
 		slimeLoopCancelled = true;
 		clearInterval(slimeHomeColors);
 		levelSelector.style.display = 'none'; // delete to go to old cdd
-		newGameView.game.nextLevel(+e.target.textContent)
+		newGameView.game.nextLevel(Number(btn.dataset.level))
 		newGameView.start(); // move up to create better css
 		startFunc();
 	})
@@ -102,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		monitor.style.display = 'flex';
 		canvas.style.filter = 'none';
 		canvas.style.backgroundColor = 'aliceblue';
-		body.requestFullscreen();
+		enterFullscreen(body);
 		window.cancelAnimationFrame(slimeLoop);
 		slimeLoopCancelled = true;
 		clearInterval(slimeHomeColors);
@@ -149,6 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	let i = 5;
 	let slimeHomeColors = setInterval(() => {
 		slime1.color = slimeColors[i % 7];
+		setHighlightColor(slime1.color);
 		i++;
 	}, 500);
 
@@ -160,6 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	collect(30);
 
 	let slime1 = new Slime([0, 0], undefined, ctx2, canvas2);
+	slime1.radius = MENU_SLIME_SIZE / 2;
 	let frame = 0;
 
 	const slimeLoop = () => {

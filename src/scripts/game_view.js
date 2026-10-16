@@ -1,173 +1,219 @@
 import { Game } from './game.js';
-import { ColorPad } from './color_pads.js';
-import { Level } from './level.js';
-import { LEVELS } from './levelsList.js';
+import { setHighlightColor } from './color_pads.js';
+
+const STEP_MS = 1000 / 60;
+const MAX_FRAME_MS = 250;
+
+// Tracks which keys are physically held, independent of key-repeat.
+class InputState {
+	constructor() {
+		this.down = new Set();
+		this.horizontalOrder = [];
+	}
+
+	press(code) {
+		this.down.add(code);
+		if (code === 'ArrowLeft' || code === 'ArrowRight') {
+			this.horizontalOrder = this.horizontalOrder.filter((c) => c !== code);
+			this.horizontalOrder.push(code);
+		}
+	}
+
+	release(code) {
+		this.down.delete(code);
+		this.horizontalOrder = this.horizontalOrder.filter((c) => c !== code);
+	}
+
+	clear() {
+		this.down.clear();
+		this.horizontalOrder = [];
+	}
+
+	isDown(code) {
+		return this.down.has(code);
+	}
+
+	// -1 for left, 1 for right, 0 for neither; the most recent press wins.
+	horizontal() {
+		const last = this.horizontalOrder[this.horizontalOrder.length - 1];
+		if (last === 'ArrowLeft') return -1;
+		if (last === 'ArrowRight') return 1;
+		return 0;
+	}
+}
 
 export default class GameView {
 	constructor(ctx, canvas) {
 		this.ctx = ctx;
 		this.canvas = canvas;
 		this.game = new Game(this.ctx, this.canvas);
+		this.input = new InputState();
 		this.paused = false;
+		this.running = false;
+		this.rafId = null;
 		this.pauseMenu = document.getElementById('pause-menu');
 		this.gameOverScreen = document.querySelector('.game-over-screen');
 		this.gameOverMenu = document.querySelector('#game-over-menu');
 		this.finalScore = document.getElementById('final-score');
 		this.pauseMenu.addEventListener('click', this.pauseCallback.bind(this));
+		this.gameLoop = this.gameLoop.bind(this);
 	}
 
 	start() {
-		window.requestAnimationFrame(this.gameLoop.bind(this));
+		if (this.running) return;
+		this.running = true;
+		this.lastTime = null;
+		this.accumulator = 0;
+		this.rafId = window.requestAnimationFrame(this.gameLoop);
 	}
 
-	gameLoop() {
-		if (this.paused) return;
-		if (this.game.checkGameStatus()) {
-			this.gameOverScreen.style.display = 'flex';
-			this.gameOverMenu.style.display = 'flex';
-			this.finalScore.textContent = this.game.score;
-			window.cancelAnimationFrame(this.gameLoop);
-			return;
+	stop() {
+		this.running = false;
+		window.cancelAnimationFrame(this.rafId);
+	}
+
+	// Fixed-timestep loop: the simulation advances in STEP_MS increments,
+	// rendering happens once per display frame.
+	gameLoop(now) {
+		if (!this.running) return;
+		if (this.lastTime === null) this.lastTime = now;
+		this.accumulator += Math.min(now - this.lastTime, MAX_FRAME_MS);
+		this.lastTime = now;
+
+		while (this.accumulator >= STEP_MS) {
+			this.accumulator -= STEP_MS;
+			if (this.game.checkGameStatus()) {
+				this.gameOver();
+				return;
+			}
+			this.game.tick(this.input);
 		}
-		this.game.step();
+
 		this.game.draw(this.ctx, this.canvas);
-		window.requestAnimationFrame(this.gameLoop.bind(this));
+		this.rafId = window.requestAnimationFrame(this.gameLoop);
+	}
+
+	gameOver() {
+		this.stop();
+		setHighlightColor(this.game.slime.color);
+		this.gameOverScreen.style.display = 'flex';
+		this.gameOverMenu.style.display = 'flex';
+		this.finalScore.textContent = this.game.score;
+	}
+
+	resize(scaleX, scaleY) {
+		this.game.resize(scaleX, scaleY);
+		this.game.draw(this.ctx, this.canvas);
 	}
 
 	pause() {
+		if (!this.running) return;
+		setHighlightColor(this.game.slime.color);
 		this.pauseMenu.style.display = 'flex';
 		this.paused = true;
+		this.stop();
 	}
 
 	pauseCallback(e) {
 		const resumeButton = document.getElementById('resume');
-		if (e.target === resumeButton) {
+		if (e.target.closest('button') === resumeButton) {
 			this.resume();
 		}
 	}
 
 	resume() {
+		if (!this.paused) return;
 		this.pauseMenu.style.display = 'none';
 		this.paused = false;
-		this.gameLoop();
+		this.start();
 	}
 
 	bindKeyHandlers() {
 		window.addEventListener('keydown', (e) => {
-			switch (e.code) {
-				case 'Space':
-					this.game.slime.resetStats();
-					break;
-				case 'ArrowUp':
-					if (this.game.slime.landing === true) {
-						this.game.frame = 0;
-					}
-					this.game.slime.move('jump');
-					break;
-				case 'ArrowLeft':
-					this.game.slime.move('move left');
-					break;
-				case 'ArrowRight':
-					this.game.slime.move('move right');
-					break;
-				case 'ArrowDown':
-					if (this.game.frame > 45) {
-						this.game.frame = 0;
-					} else if (this.game.frame > 40) {
-						this.game.frame = 40;
-					}
-					this.game.slime.move('crouch');
-					break;
-				case 'KeyD':
-					if (
-						this.game.slime.dashCount >= this.game.slime.dashCountMax &&
-						this.game.slime.color === 'yellow'
-					) {
-						this.game.frame = 0;
-						this.game.slime.move('dash');
-					}
-					break;
-				case 'KeyF':
-					let floorColor = this.game.slime.floorColor.color;
-					if (this.game.slime.color === 'blue') {
-						switch (floorColor) {
-							case 'red':
-								this.game.slime.vel[1] *= -1;
-								this.game.slime.grav_dir = -1;
-								this.game.slime.color = 'red';
-								break;
-							case 'orange':
-								this.game.slime.color = 'orange';
-								break;
-							case 'yellow':
-								this.game.slime.dashCountMax = 1;
-								this.game.slime.color = 'yellow';
-								break;
-							case 'green':
-								this.game.slime.color = 'green';
-								if (this.game.slime.health < this.game.slime.maxHealth) {
-									let diff = this.game.slime.maxHealth - this.game.slime.health;
-									diff > 20
-										? (this.game.slime.health += 20)
-										: (this.game.slime.health += diff);
-									this.game.allObjects[
-										this.game.allObjects.findIndex(
-											(el) => el instanceof ColorPad && el.color === 'green'
-										)
-									].color = 'clear';
-									this.game.slime.radiusCheck();
-								}
-								break;
-							case 'violet':
-								this.game.slime.color = 'violet';
-								this.game.slime.ignoreCollision = true;
-								break;
-							case 'pink':
-								this.game.slime.jumpCountMax = 2;
-								this.game.slime.jumpCount = 2;
-								this.game.slime.color = 'pink';
-								break;
-						}
-					}
-					break;
-				case 'KeyP':
-					this.pause();
-					break;
-				case 'KeyA':
-					this.game.slime.move('meleeAttack');
-					this.game.frame = 0;
-					break;
-				case 'KeyS':
-					this.game.slime.move('rangedAttack');
-					this.game.frame = 0;
-					break;
-				case 'KeyR':
-					this.game.deaths++;
-					this.game.score -= 1000;
-					this.game.slime.health = this.game.slime.roomHealth;
-					this.game.slime.resetStats();
-					this.game.slime.radiusCheck();
-					this.game.level = new Level(
-						this.ctx,
-						this.canvas,
-						LEVELS[this.game.currentLevel],
-						this.game.slime
-					);
-					break;
+			this.input.press(e.code);
+			if (e.code === 'KeyP') {
+				if (!e.repeat) this.paused ? this.resume() : this.pause();
+				return;
 			}
+			// Ignore actions while paused or on the game-over screen, and
+			// ignore key-repeat so held keys only fire their action once.
+			// Left/Right/Down are resolved from held state each tick.
+			if (!this.running || e.repeat) return;
+			this.handleAction(e.code);
 		});
 		window.addEventListener('keyup', (e) => {
-			switch (e.code) {
-				case 'ArrowRight':
-					this.game.slime.move('stop');
-					break;
-				case 'ArrowLeft':
-					this.game.slime.move('stop');
-					break;
-				case 'ArrowDown':
-					this.game.slime.move('stop');
-					break;
-			}
+			this.input.release(e.code);
 		});
+		window.addEventListener('blur', () => this.input.clear());
+	}
+
+	handleAction(code) {
+		const slime = this.game.slime;
+		switch (code) {
+			case 'Space':
+				slime.resetStats();
+				break;
+			case 'ArrowUp':
+				this.game.jump();
+				break;
+			case 'KeyD':
+				if (slime.dashCount >= slime.dashCountMax && slime.color === 'yellow') {
+					this.game.frame = 0;
+					slime.move('dash');
+				}
+				break;
+			case 'KeyF':
+				this.absorbPad();
+				break;
+			case 'KeyA':
+				slime.move('meleeAttack');
+				this.game.frame = 0;
+				break;
+			case 'KeyS':
+				slime.move('rangedAttack');
+				this.game.frame = 0;
+				break;
+			case 'KeyR':
+				this.game.resetRoom();
+				break;
+		}
+	}
+
+	absorbPad() {
+		const slime = this.game.slime;
+		const pad = slime.floorColor;
+		if (!pad || slime.color !== 'blue') return;
+		switch (pad.color) {
+			case 'red':
+				slime.vel[1] *= -1;
+				slime.grav_dir = -1;
+				slime.color = 'red';
+				break;
+			case 'orange':
+				slime.color = 'orange';
+				break;
+			case 'yellow':
+				slime.dashCountMax = 1;
+				slime.color = 'yellow';
+				break;
+			case 'green':
+				slime.color = 'green';
+				if (slime.health < slime.maxHealth) {
+					let diff = slime.maxHealth - slime.health;
+					diff > 20 ? (slime.health += 20) : (slime.health += diff);
+					pad.color = 'clear';
+					slime.radiusCheck();
+				}
+				break;
+			case 'violet':
+				slime.color = 'violet';
+				slime.ignoreCollision = true;
+				break;
+			case 'pink':
+				slime.jumpCountMax = 2;
+				slime.jumpCount = 2;
+				slime.color = 'pink';
+				break;
+		}
 	}
 }
