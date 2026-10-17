@@ -133,16 +133,6 @@ export class Game {
 		if (door) door.color = 'lightgreen';
 	}
 
-	resize(scaleX, scaleY) {
-		this.allObjects.forEach((obj) => {
-			obj.pos[0] *= scaleX;
-			obj.pos[1] *= scaleY;
-			obj.width *= scaleX;
-			obj.height *= scaleY;
-		});
-		this.slime.rescale(scaleX, scaleY);
-	}
-
 	draw(ctx, canvas) {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 		drawHints(ctx, canvas, this.level, this.hintFrame);

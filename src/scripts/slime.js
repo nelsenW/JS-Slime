@@ -338,15 +338,6 @@ export default class Slime {
 		}
 	}
 
-	// Called after the canvas is resized; scales position and size together.
-	rescale(scaleX, scaleY) {
-		this.pos[0] *= scaleX;
-		this.pos[1] *= scaleY;
-		this.heightMod = this.canvas.width / 1080;
-		this.widthMod = this.canvas.width / 1920;
-		this.radius = this.baseRadius() * this.widthMod;
-	}
-
 	resetStats() {
 		this.color = 'blue';
 		this.jumpCountMax = 1;

@@ -101,11 +101,6 @@ export default class GameView {
 		this.finalScore.textContent = this.game.score;
 	}
 
-	resize(scaleX, scaleY) {
-		this.game.resize(scaleX, scaleY);
-		this.game.draw(this.ctx, this.canvas);
-	}
-
 	pause() {
 		if (!this.running) return;
 		setHighlightColor(this.game.slime.color);

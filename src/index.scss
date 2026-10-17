@@ -20,11 +20,8 @@ body {
 
 #canvas {
     background-color: black;
-    margin: auto;
     display: block;
-    padding: 0;
-    width: 100%;
-    height: 100%;
+    position: fixed; // size and offset are set from JS to letterbox the game
     margin: 0;
     padding: 0;
     filter: blur(15px) contrast(30);

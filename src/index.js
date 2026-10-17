@@ -39,15 +39,37 @@ document.addEventListener('DOMContentLoaded', () => {
 		'pink',
 	];
 
-	canvas.height = window.innerHeight;
-	canvas.width = window.innerWidth;
+	// The game always runs in this fixed logical space and the canvas is
+	// scaled to fit the window (letterboxed), so window size or shape never
+	// changes tiles, slime size or physics. Game code receives VIEW as its
+	// "canvas" and draws through a transform.
+	const VIEW = { width: 1920, height: 1080 };
+	let gameStarted = false;
+	const fitCanvas = () => {
+		const scale = Math.min(window.innerWidth / VIEW.width, window.innerHeight / VIEW.height);
+		const cssWidth = Math.round(VIEW.width * scale);
+		const cssHeight = Math.round(VIEW.height * scale);
+		const dpr = window.devicePixelRatio || 1;
+		canvas.style.width = `${cssWidth}px`;
+		canvas.style.height = `${cssHeight}px`;
+		canvas.style.left = `${Math.round((window.innerWidth - cssWidth) / 2)}px`;
+		canvas.style.top = `${Math.round((window.innerHeight - cssHeight) / 2)}px`;
+		// Back the canvas at device resolution so it stays sharp when scaled.
+		canvas.width = Math.round(cssWidth * dpr);
+		canvas.height = Math.round(cssHeight * dpr);
+		ctx.setTransform(canvas.width / VIEW.width, 0, 0, canvas.height / VIEW.height, 0, 0);
+		// Keep the narrator monitor on the game area, not in the bars.
+		monitor.style.left = `${Math.round((window.innerWidth - cssWidth) / 2) + 10}px`;
+		monitor.style.top = `${Math.round((window.innerHeight - cssHeight) / 2) + 10}px`;
+	};
+	fitCanvas();
 
 	// The menu slime has a fixed size so it stays put in the fixed-size menu.
 	const MENU_SLIME_SIZE = 128;
 	canvas2.height = MENU_SLIME_SIZE;
 	canvas2.width = MENU_SLIME_SIZE;
 
-	let newGameView = new GameView(ctx, canvas);
+	let newGameView = new GameView(ctx, VIEW);
 
 	// Pre-render the recolored slime sheets once the source image is ready.
 	const slimeSheet = document.getElementById('slime-sheet');
@@ -65,14 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	};
 
 	window.addEventListener('resize', () => {
-		const width = window.innerWidth;
-		const height = window.innerHeight;
-		if (width === canvas.width && height === canvas.height) return;
-		const scaleX = width / canvas.width;
-		const scaleY = height / canvas.height;
-		canvas.width = width;
-		canvas.height = height;
-		newGameView.resize(scaleX, scaleY);
+		fitCanvas();
+		// Resizing clears the canvas; repaint now in case the loop is paused.
+		if (gameStarted) newGameView.game.draw(ctx, VIEW);
 	});
 
 	retry.addEventListener('click', () => {
@@ -109,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 	const startFunc = () => {
+		gameStarted = true;
 		newGameView.game.slime.color = 'blue';
 		newGameView.bindKeyHandlers();
 		newGameView.game.slime.gravity = 0.98;
@@ -177,7 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const collect = (num) => {
 		for (let i = 0; i < num; i++) {
-			blobArray.push(new Blob(canvas));
+			blobArray.push(new Blob(VIEW));
 		}
 	};
 	collect(30);
@@ -187,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	let frame = 0;
 
 	const slimeLoop = () => {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		ctx.clearRect(0, 0, VIEW.width, VIEW.height);
 		ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
 		frame++;
 		blobArray.forEach((blob) => blob.update());
