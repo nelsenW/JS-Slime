@@ -35,72 +35,49 @@ body {
     margin-bottom: -0.75em; // sprite has empty space under the slime
 }
 
-.start-menu {
+// Start menu and its sub-panels share one look. Everything inside is sized
+// in em, so the panels scale with the screen.
+.start-menu, .panel {
     color: cornflowerblue;
     background-color: aliceblue;
-    // Everything inside is sized in em, so the menu scales with the screen.
     font-size: clamp(14px, 2.4vmin, 32px);
     padding: 0.9em 1.6em 1.3em;
-    display: flex;
     flex-direction: column;
+    align-items: stretch;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 0.8em;
+    max-width: 92vw;
+    max-height: 92vh;
+}
+
+.start-menu {
+    display: flex;
+}
+
+.panel {
+    display: none; // shown as flex from JS
+    min-width: 16em;
 }
 
 .start-menu h1 {
     font-size: 2.6em;
 }
 
-.start-menu button {
+.start-menu button, .panel button {
     font-size: 1em;
     padding: 0.5em 2.2em;
-    margin: 0.4em 0;
-    border-radius: 0.6em;
+    margin: 0.45em 0;
 }
 
 // The global overflow: hidden clips buttons as they grow on hover.
-.start-menu, nav, fieldset, form, ul, #game-over-menu, #levels-selector-list {
+.start-menu, nav, form, ul, #game-over-menu, #levels-selector-list {
     overflow: visible;
 }
 
-.about-menu {
-    color: cornflowerblue;
-    display: none;
-    flex-direction: column;
-    position: fixed;
-    top: 40%;
-    left: 47%;
-}
-
-.controls-menu {
-    color: cornflowerblue;
-    display: none;
-    flex-direction: column;
-    position: fixed;
-    top: 40%;
-    left: 47%;
-}
-
-.levels-selector {
-    color: cornflowerblue;
-    display: none;
-    flex-direction: column;
-    position: fixed;
-    top: 10%;
-    width: 30%;
-}
-
-#levels-selector-list{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.title {
+.title, .panel-title {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -108,45 +85,159 @@ body {
     margin-bottom: 0.5em;
 }
 
+.panel-title h2 {
+    font-size: 2.2em;
+}
+
+// Copy of the menu slime next to each panel title (drawn from JS, so it
+// cycles colours with the start-menu slime).
+.panel-slime {
+    display: block;
+    width: 2.8em;
+    height: 2.8em;
+    margin-bottom: -0.45em;
+}
+
+.panel h3 {
+    font-size: 1.2em;
+    margin: 0.2em 0 0.3em;
+}
+
+.panel p {
+    color: #333;
+    font-family: 'Fredoka One';
+    margin: 0.15em 0;
+}
+
+.panel-note {
+    font-size: 0.8em;
+    max-width: 24em;
+    margin-bottom: 0.4em !important;
+}
+
+.panel-row {
+    display: flex;
+    gap: 0.8em;
+    margin-top: 0.6em;
+}
+
+.panel-row form {
+    flex: 1;
+    display: flex;
+}
+
+.panel-row button {
+    flex: 1;
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+}
+
+.panel .back-button {
+    margin-top: 0.9em;
+}
+
+.control-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.55em 0.9em;
+    color: #333;
+}
+
+.control-list li {
+    display: contents;
+}
+
+.control-list .keys {
+    display: flex;
+    gap: 0.35em;
+    justify-content: flex-end;
+}
+
+// Keycaps drawn like the in-game hints and the pixel buttons.
+kbd {
+    font-family: 'Fredoka One';
+    font-size: 0.85em;
+    min-width: 1.9em;
+    height: 1.9em;
+    padding: 0 0.3em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    color: #333;
+    box-shadow: 0 -0.15em 0 0 #333, 0 0.15em 0 0 #333,
+        -0.15em 0 0 0 #333, 0.15em 0 0 0 #333,
+        inset 0 -0.2em 0 0 #c9d3e0;
+    margin: 0.15em;
+}
+
+kbd.wide {
+    min-width: 4.5em;
+}
+
+#levels-selector-list {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.6em;
+    list-style: none;
+    padding: 0.3em;
+}
+
+#levels-selector-list button {
+    padding: 0.45em 0;
+    margin: 0;
+}
 
 .menu-navbar{
     display: flex;
     flex-direction: column;
 }
 
-button{
-    padding: 5px 20px;
-    margin: 5px 5px;
-    background-color: transparent;
-    font-family: 'Fredoka One';
-    border-radius: 10px;
-    position: relative;
-}
 // Hover highlight follows the slime's current colour; the --slime-*
 // variables are set from JS (see setHighlightColor in color_pads.js).
 :root {
     --slime-light: rgb(109, 154, 238);
     --slime-base: rgb(54, 116, 231);
     --slime-text: black;
+    --ink: #111;
 }
 
+// Buttons use a stepped, pixel-art outline like the slime sprite's: four
+// offset shadows leave the corners notched instead of rounded.
 button {
+    --px: 0.18em;
+    padding: 5px 20px;
+    margin: 5px 5px;
+    border: none;
+    border-radius: 0;
+    background-color: aliceblue;
+    color: black;
+    font-family: 'Fredoka One';
+    position: relative;
+    box-shadow:
+        0 calc(-1 * var(--px)) 0 0 var(--ink),
+        0 var(--px) 0 0 var(--ink),
+        calc(-1 * var(--px)) 0 0 0 var(--ink),
+        var(--px) 0 0 0 var(--ink);
     transition: transform 0.15s ease, background-color 0.3s ease,
-        border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+        box-shadow 0.3s ease, color 0.3s ease;
 }
 
+// Highlighted: slime-coloured fill with a darker underside, like the slime.
 button:hover,
 button:focus-visible {
     transform: scale(1.08);
     background-color: var(--slime-light);
-    border-color: var(--slime-base);
     color: var(--slime-text);
-    box-shadow: 0 0 10px var(--slime-base);
-}
-
-#levels-selector-list button{
-    padding: 15px;
-    margin: 10px;
+    box-shadow:
+        0 calc(-1 * var(--px)) 0 0 var(--ink),
+        0 var(--px) 0 0 var(--ink),
+        calc(-1 * var(--px)) 0 0 0 var(--ink),
+        var(--px) 0 0 0 var(--ink),
+        inset 0 calc(-1.5 * var(--px)) 0 0 var(--slime-base);
+    outline: none;
 }
 
 #pause-menu{
@@ -162,40 +253,6 @@ image#blue-palette{
     
 image#slime-sheet{
     display: none;
-}
-
-fieldset{
-    border: 1px solid slategray;
-    border-radius: 10%;
-    background: radial-gradient(slategray, slateblue);
-    color:black;
-    padding: 20px;
-}
-
-fieldset legend{
-    display: flex;
-    justify-content: space-between;
-}
-
-#close-button{
-    padding: 4px;;
-    margin:0 4px;
-    position: absolute;
-    left: 85%;
-}
-
-#close-button2{
-    padding: 4px;;
-    margin:0 4px;
-    position: absolute;
-    left: 85%;
-}
-
-#close-button3{
-    padding:4px;
-    margin:0 4px;
-    position: absolute;
-    left: 85%;
 }
 
 .game-over-screen{

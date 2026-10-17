@@ -49,46 +49,52 @@
         <p class="deaths"><span>Deaths: </span><span id="deaths"></span></p>
     </div>
 
-    <nav  class="about-menu">
-        <fieldset>
-            <button id="close-button">x</button>
+    <nav class="about-menu panel">
+        <div class="panel-title">
+            <h2>About</h2>
+            <canvas class="panel-slime" width="128" height="128"></canvas>
+        </div>
+        <h3>Credits</h3>
+        <p>Artwork: William Nelsen</p>
+        <p>Code Production: Me also</p>
+        <div class="panel-row">
             <form action="https://github.com/nelsenW/Javascript-Project" method="GET">
-            <button>Github!</button>
+                <button>GitHub</button>
             </form>
             <form action="https://www.linkedin.com/in/william-nelsen-571157244/" method="GET">
-                <button>LinkedIN</button>
+                <button>LinkedIn</button>
             </form>
-            <h2>Credits: </h2>
-                <p>Artwork: William Nelsen</p>
-                <p>Code Production: Me also</p>
-        </fieldset>
-        
+        </div>
+        <button id="close-button" class="back-button">Back</button>
     </nav>
 
-    <nav class="levels-selector">
-        <button id="close-button3">x</button>
-        <fieldset>
-            <p>Warning! Levels are meant to be played sequentially so accessing some levels ahead of sequence will cause them to not be playable.</p>
-            <ul id="levels-selector-list">
-            </ul>
-        </fieldset>
+    <nav class="levels-selector panel">
+        <div class="panel-title">
+            <h2>Levels</h2>
+            <canvas class="panel-slime" width="128" height="128"></canvas>
+        </div>
+        <p class="panel-note">Levels are meant to be played in order; jumping ahead may leave some unplayable.</p>
+        <ul id="levels-selector-list">
+        </ul>
+        <button id="close-button3" class="back-button">Back</button>
     </nav>
 
 
-    <nav class="controls-menu">
-        <button id="close-button2">x</button>
-        <fieldset>
-            <ul>
-                <li>Left Arrow: move-left</li>
-                <li>Right Arrow: move-right</li>
-                <li>Up Arrow: jump</li>
-                <li>P: pause menu</li>
-                <li>F: switch colors</li>
-                <li>Spacebar: reset color</li>
-                <li>D: dash</li>
-                <li>R: reset level</li>
-            </ul>
-        </fieldset>
+    <nav class="controls-menu panel">
+        <div class="panel-title">
+            <h2>Controls</h2>
+            <canvas class="panel-slime" width="128" height="128"></canvas>
+        </div>
+        <ul class="control-list">
+            <li><span class="keys"><kbd>&#9664;</kbd><kbd>&#9654;</kbd></span><span>Move</span></li>
+            <li><span class="keys"><kbd>&#9650;</kbd></span><span>Jump</span></li>
+            <li><span class="keys"><kbd>F</kbd></span><span>Absorb a pad's color</span></li>
+            <li><span class="keys"><kbd class="wide">Space</kbd></span><span>Reset to blue</span></li>
+            <li><span class="keys"><kbd>D</kbd></span><span>Dash (yellow)</span></li>
+            <li><span class="keys"><kbd>R</kbd></span><span>Restart room</span></li>
+            <li><span class="keys"><kbd>P</kbd></span><span>Pause</span></li>
+        </ul>
+        <button id="close-button2" class="back-button">Back</button>
     </nav>
 
      <nav id="pause-menu">

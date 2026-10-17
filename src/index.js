@@ -200,6 +200,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	};
 	collect(30);
 
+	const panelSlimes = [...document.querySelectorAll('.panel-slime')].map((c) =>
+		c.getContext('2d')
+	);
 	let slime1 = new Slime([0, 0], undefined, ctx2, canvas2);
 	slime1.radius = MENU_SLIME_SIZE / 2;
 	let frame = 0;
@@ -211,6 +214,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		blobArray.forEach((blob) => blob.update());
 		blobArray.forEach((blob) => blob.draw(ctx));
 		slime1.animate(frame, 5);
+		panelSlimes.forEach((panelCtx) => {
+			panelCtx.clearRect(0, 0, canvas2.width, canvas2.height);
+			panelCtx.drawImage(canvas2, 0, 0);
+		});
 		if (!slimeLoopCancelled) {
 			setTimeout(() => {
 				window.requestAnimationFrame(slimeLoop);
